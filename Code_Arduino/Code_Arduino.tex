@@ -42,6 +42,10 @@
 \usepackage{pst-all}								%Better handling of texts and images
 \usepackage{mathrsfs}
 \usepackage{colortbl}
+\usepackage{listings}
+\usepackage{minted}
+\captionsetup{font=small}
+
 
 
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
@@ -121,6 +125,7 @@
 	textheight=242mm,
 	footskip=15mm
 ]{geometry}
+\setlength\parindent{20pt}
 %---------------------------------------------------------------------------
 
 % Makeindex Package
@@ -134,7 +139,7 @@
 %---------------------------------------------------------------------------
 \begin{document}                              					% Start Document
 \settocdepth{subsection}									% Set depth of toc
-\pagenumbering{roman}														
+\pagenumbering{Roman}														
 %---------------------------------------------------------------------------
 
 %Set up header and footer
@@ -157,6 +162,8 @@
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.  #1}{}}
 \renewcommand{\headrulewidth}{0pt}				% no header stripline
 \renewcommand{\footrulewidth}{0pt} 				% no bottom stripline
+\renewcommand\listoflistingscaption{Liste des codes sources}
+
 
 \pagestyle{plain}
 \let\cleardoublepage\clearpage
@@ -211,7 +218,7 @@
 		Rédacteur:\> Quentin Surdez\\ \\
 		Relecture:\> Rafael Dousse\\ \\
 		École:\> CPNV\\ \\
-		Date:\> Yverdon-Les-Bains, le 10 mars 2022\\%\today \\
+		Date:\> Yverdon-Les-Bains, le \today \\
 	\end{tabbing}
 \end{titlepage}
 %---------------------------------------------------------------------------
@@ -221,8 +228,9 @@
 %===========================================
 \tableofcontents
 
-%\listoffigures									% Table des figures
+\listoffigures									% Table des figures
 %\listoftables									% Table des tableaux
+\listoflistings % Now typeset the list
 \cleardoublepage
 %---------------------------------------------------------------------------
 
@@ -233,19 +241,111 @@
 \setcounter{page}{1}
 
 \chapter{Introduction}
-Ce document a pour but d'expliciter les commentaires et l'architecture du code de l'Arduino Nano pour le contrôle des moteurs. Il permet un approfondissement du code et de comprendre la logique derrière les différents choix effectués
+Ce document a pour but d'expliciter les commentaires et l'architecture du code de l'Arduino Nano pour le contrôle des moteurs. Il permet un approfondissement du code et de comprendre la logique derrière 
+les différents choix effectués.
 
 %=============================================================================================
 % Document
 %=============================================================================================
 
+\chapter{Asservissement des moteurs}
+
+L'asservissement de moteurs à courant continu est au coeur de notre projet. En effet, chaque fonction que nous construisons par la suite reposera totalement ou en partie sur la fonction d'asservissement. \par
+
+L'asservissement permet de contrôler un certain paramètre dans un système. Il se caractérise par le besoin d'un système de maintenir une consigne donnée, qu'importe les perturbations infligées au système.
+Nous avons donc asservi notre système au niveau des moteurs. En effet, nous souhaitons que le robot aille tout droit lorsqu'on le lui demande, ce qui se traduit par le besoin d'avoir
+la même vitesse constante aux deux moteurs. \par
+
+\section{PID}
+
+
+
+Pour asservir nos moteurs à courant continu, nous avons choisi d'utiliser la méthode des facteurs PID. L'acronyme PID signifie proportionnel, intégral, dérivateur. Ce sont les 3 facteurs que nous 
+utilisons pour construire notre asservissement. \par
+
+Pour utiliser les différents facteurs, nous devons premièrement calculer l'erreur. Elle est la différence entre la consigne et la vitesse observée. Nous appliquons le facteur proportionnel directement à l'erreur.
+Le facteur intégratif est appliqué à la somme des erreurs sur le temps. Enfin, le facteur dérivateur s'applique sur la différence des erreurs sur le temps. \par
+
+	\begin{center}
+
+L'équation pour le calcul de la valeur de contrôle est la suivante : 
+		\begin{figure}[h]
+			\[u=k_pe + k_i \int e \cdot dt + k_d \cfrac{de}{dt}\] 
+			\caption{Équation du PID}
+			\label{eq1}
+		\end{figure}
+	\end{center} 
+
+Les différents calculs se font par rapport à un $dt$, cette particularité est très importante et a permis de diriger le développement du code. Pour mieux comprendre l'intégration de l'équation dans le code 
+une image permet de visualiser le processus : 
+
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[scale=.3]{img/PID.png}
+		\label{PIDfig}
+		\caption{Intégration de l'erreur et du PID}
+	\end{figure}
+
+
+
 \chapter{Interruptions}
+
+Comme expliqué au-dessus, la composante du temps est très importante. C'est grâce à elle que l'asservissement peut être fonctionnel et robuste. Pour intégrer ce besoin, il existe une fonctionnalité 
+des microcontrôleurs MegaAVR appelée interruption. Les interruptions permettent, comme leur nom l'indique, d'interrompre le programme pour effectuer une tâche bien précise. Souvent, cette tâche est une incrémentation de valeur, ainsi 
+l'interruption ne dure qu'un très court instant. Après avoir fini la routine d'interruption, le programme reprend exactement là où il en était. \par
+
 \section{Les interruptions attachées}
-\section{Détacher les interruptions}
+
+La librairie Arduino permet d'utiliser une fonction appelée attachInterrupt(). Cette fonction permet de donner à un pin la responsabilité de lancer une routine d'interruption. Cette interruption sera alors attachée à un pin. Ainsi, si un pin est activé 
+à un internal de temps régulier, la routine d'interruption se fera à un interval de temps régulier. \par
+
+Cela a été mis en place pour notre projet en incorporant un Arduino gérant exclusivement le temps. Toutes les $x$ secondes, un signal est envoyé à l'Arduino se chargeant de calculer le PID. Un schéma permet de visualier 
+le processus : 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.2]{img/interruptions_attachees.jpg}
+	\label{IntSch}
+	\caption{Schéma des interruptions attachées}
+\end{figure}
+
+\chapter{Code}
+pygme
+Le code a été écrit dans le but de répondre au besoin de notre projet. Les fonctions le composant et la logique appliquée
+seront discutés dans les prochains sous-chapitres. Premièrement, une explication du code nécessaire au setup de la
+communication I2C, puis donner de plus grandes explications que les commentaires sur les fonctions créées. Enfin, une
+une explication sur la remise à zéro des différentes valeurs pour que les différentes fonctions puissent intéragir entre
+elles sans compromettre l'intégrité de l'ensemble.
+
+\section{Communication I2C}
 
 
-\chapter{Communication I2C}
+\begin{listing}[!ht]
+\usemintedstyle{rainbow_dash}
+\begin{minted}{c}
+// Set up du programme tourner sur soi ---------------------------
+void tourneSurSoi(){
+
+  
+  attachInterrupt(digitalPinToInterrupt(photoElectricSensor), compteurDistance, RISING);
+  attachInterrupt(digitalPinToInterrupt(pin_PID), asservissement, RISING);  
+
+ 
+  consigne_moteur = 2;
+  consigne_moteur1 = 0;
+
+  tourner = 1;
+
+}
+\end{minted}
+\caption{Fonction du robot en C}
+\label{listing:2}
+\end{listing}
+
+
 \section{Fonctions appelées}
+
+
+
 \section{Remise à zéro des valeurs}
 
 

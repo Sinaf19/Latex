@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{//}\PYG{+w}{ }\PYG{n+nv}{Set}\PYG{+w}{ }\PYG{n+nv}{up}\PYG{+w}{ }\PYG{n+nv}{du}\PYG{+w}{ }\PYG{n+nv}{programme}\PYG{+w}{ }\PYG{n+nv}{tourner}\PYG{+w}{ }\PYG{n+nv}{sur}\PYG{+w}{ }\PYG{n+nv}{soi}\PYG{+w}{ }\PYG{n+nv}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{n+nv}{void}\PYG{+w}{ }\PYG{n+nv}{tourneSurSoi}\PYG{p}{()}\PYG{n+nv}{\PYGZob{}}
+
+
+\PYG{+w}{  }\PYG{n+nv}{attachInterrupt}\PYG{p}{(}\PYG{n+nv}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n+nv}{photoElectricSensor}\PYG{p}{)}\PYG{o}{,}\PYG{+w}{ }\PYG{n+nv}{compteurDistance,}\PYG{+w}{ }\PYG{n+nv}{RISING}\PYG{p}{)}\PYG{c+c1}{;}
+\PYG{+w}{  }\PYG{n+nv}{attachInterrupt}\PYG{p}{(}\PYG{n+nv}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n+nv}{pin\PYGZus{}PID}\PYG{p}{)}\PYG{o}{,}\PYG{+w}{ }\PYG{n+nv}{asservissement,}\PYG{+w}{ }\PYG{n+nv}{RISING}\PYG{p}{)}\PYG{c+c1}{;}
+
+
+\PYG{+w}{  }\PYG{n+nv}{consigne\PYGZus{}moteur}\PYG{+w}{ }\PYG{n+nf}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{c+c1}{;}
+\PYG{+w}{  }\PYG{n+nv}{consigne\PYGZus{}moteur1}\PYG{+w}{ }\PYG{n+nf}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{c+c1}{;}
+
+\PYG{+w}{  }\PYG{n+nv}{tourner}\PYG{+w}{ }\PYG{n+nf}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{c+c1}{;}
+
+\PYG{n+nv}{\PYGZcb{}}
+\end{Verbatim}
