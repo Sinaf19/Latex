@@ -1,0 +1,255 @@
+%	Auteur: Surdez Quentin
+%	Titre:	 Étudiant MCT
+%	Date: Mai 2022
+%	Sujet: Rapport de projet P2213	
+%============================================================
+\documentclass[
+	a4paper,									% paper format
+	11pt,										% fontsize
+	twoside,									% double-sided
+	openright,									% begin new chapter on right side
+	notitlepage,									% use no standard title page
+	parskip=half,								% set paragraph skip to half of a line
+]{scrreprt}										% KOMA-script report
+%---------------------------------------------------------------------------
+
+\raggedbottom
+\KOMAoptions{cleardoublepage=plain}						%Add header and footer on blank pages
+
+%Load Standard Packages: 
+%---------------------------------------------------------------------------
+\usepackage[standard-baselineskips]{cmbright}				%Fonts for math equation
+\usepackage[french]{babel}							%French hyphenation
+	%\usepackage[latin1]{inputenc}  					% Unix/Linux - load extended character set (ISO 8859-1)
+	%\usepackage[applemac]{inputenc}
+	%\usepackage[ansinew]{inputenc}  					% Windows - load extended character set (ISO 8859-1)
+%\usepackage[utf8]{inputenc}							%Translate input in latex language
+\usepackage[T1]{fontenc}							%Allow a good hyphenation with accentuated language
+%\usepackage{tgbonum}
+\usepackage{ae}									%Allow vectorial letters
+\usepackage{lmodern}
+\usepackage{fancyhdr}								%Allow manipulation on headers and tops
+\usepackage{graphicx}								%Integration of images
+\usepackage{float}									%Better integration of floating objects(tables, etc)
+\usepackage{caption}								%For captions of figures and tables
+\usepackage{booktabs}								%Nicer tables
+\usepackage{tocvsec2}								%Means of controlling the sectional numbering
+\usepackage{verbatim}								%Integration of source code
+\usepackage{moreverb}								%Extension of verbatim
+\usepackage{listings}								%Integration of code in LATEX 
+\usepackage{multirow}								%Tables with multiple rows
+\usepackage{pdfpages}						
+\usepackage{pst-all}								%Better handling of texts and images
+\usepackage{mathrsfs}
+\usepackage{colortbl}
+
+
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash }b{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}		%Adding new column types
+
+%---------------------------------------------------------------------------
+
+%Load Math packages
+%---------------------------------------------------------------------------
+\usepackage{amsmath}                    				   	% various features to facilitate writing math formulas
+\usepackage{amsthm}                       	 				% enhanced version of latex's newtheorem
+\usepackage{amsfonts}                      					% set of miscellaneous TeX fonts that augment the standard CM
+										
+\usepackage{amssymb}							% mathematical special characters
+\usepackage{exscale}							% mathematical size corresponds to textsize
+\usepackage{listings}
+\usepackage{tikz,pgfplots}
+\usepackage{array}
+%---------------------------------------------------------------------------
+
+%QR Code
+%---------------------------------------------------------------------------
+\usepackage{qrcode}
+\usepackage{subcaption}							%Add sub-caption easily
+%---------------------------------------------------------------------------
+
+% Package to facilitate placement of boxes at absolute positions
+%---------------------------------------------------------------------------
+%\usepackage[absolute]{textpos}
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+%---------------------------------------------------------------------------	
+
+% Definition of Colors
+%---------------------------------------------------------------------------
+\RequirePackage{color}							% Color (not xcolor!)
+\definecolor{linkblue}{rgb}{0,0,0.8}            				% Standard
+\definecolor{darkblue}{rgb}{0,0.08,0.45} 				% Dark blue
+\definecolor{brickred}{cmyk}{0,0.89,0.94,0.28} 			% Brickred
+\definecolor{linkcolor}{rgb}{0,0,0}        					% Black for the print-version!
+\definecolor{PEjaune}{rgb}{1,0.84,0}        				% Jaune PE
+\definecolor{PEvert}{rgb}{0.14,0.5,0}        				% Vert PE
+
+\definecolor{VertVAUD}{rgb}{0.054, 0.662, 0.301} %14, 169, 77}
+
+%---------------------------------------------------------------------------
+
+% Hyperref Package (Create links in a pdf)
+%---------------------------------------------------------------------------
+\usepackage[
+	pdftex,frenchb,bookmarks,plainpages=false,pdfpagelabels,
+	backref = {false},							% No index backreference
+	colorlinks = {true},							% Color links in a PDF
+	hypertexnames = {true},						% no failures "same page(i)"
+	bookmarksopen = {true},						% opens the bar on the left side
+	bookmarksopenlevel = {0},					% depth of opened bookmarks
+	pdftitle = {Rapport Projet P2213},		   		% PDF-property
+	pdfauthor = {Surdez Quentin},        				% PDF-property
+	pdfsubject = {Promotion 21-22},        				% PDF-property
+	linkcolor = {linkcolor},              					% Color of Links
+	citecolor = {linkcolor},              					% Color of Cite-Links
+	urlcolor = {linkcolor},               					% Color of URLs
+]{hyperref}
+%---------------------------------------------------------------------------
+
+% Set up page dimension
+%---------------------------------------------------------------------------
+\usepackage[
+	a4paper,
+	left=28mm,
+	right=15mm,
+	top=30mm,
+	headheight=20mm,
+	headsep=10mm,
+	textheight=242mm,
+	footskip=15mm
+]{geometry}
+%---------------------------------------------------------------------------
+
+% Makeindex Package
+%---------------------------------------------------------------------------
+\usepackage{makeidx}                         					% To produce index
+\makeindex                                    					% Index-Initialisation
+%---------------------------------------------------------------------------
+
+% Intro:
+\pgfplotsset{compat=1.18} 
+%---------------------------------------------------------------------------
+\begin{document}                              					% Start Document
+\settocdepth{subsection}									% Set depth of toc
+\pagenumbering{roman}														
+%---------------------------------------------------------------------------
+
+%Set up header and footer
+%---------------------------------------------------------------------------
+\fancyhf{}												%clean all fields
+\fancypagestyle{plain}{									%new definition of plain style
+	\fancyfoot[OR, EL]{\footnotesize \thepage}			%footer right part --> page number
+	\fancyfoot[OL, ER]{\footnotesize \leftmark}			%footer left part --> chapter
+	\fancyfoot[CE, CO]{P2213, QS \& RD}
+	\fancyhead[C]{
+	\begin{textblock}{0}[0, 0](5, 8)						%header center part --> logo CPNV + MCT 
+		\includegraphics[scale=0.7]{img/logoCPNV.png}
+	\end{textblock}
+	\begin{textblock}{0}[0, 0](175, 3)
+		\includegraphics[scale=0.5]{img/logoMCT.jpg}
+	\end{textblock}
+	}
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.  #1}{}}
+\renewcommand{\headrulewidth}{0pt}				% no header stripline
+\renewcommand{\footrulewidth}{0pt} 				% no bottom stripline
+
+\pagestyle{plain}
+\let\cleardoublepage\clearpage
+%---------------------------------------------------------------------------
+
+%=============================================================================================
+% Page principale
+%=============================================================================================
+%---------------------------------------------------------------------------
+\begin{titlepage}
+	\setlength{\unitlength}{1mm}
+%	\begin{textblock}{230}(-10,-10)
+%		\begin{picture}(230,35)%32)
+%			\put(73,0){\color{VertVAUD}\rule{160mm}{40mm}}
+%		\end{picture}
+%	\end{textblock}
+
+	\begin{textblock}{0}[0,0](5,12) % (x,y)
+		\includegraphics[scale=1]{img/logoCPNV.png}
+	\end{textblock}
+
+	\begin{textblock}{0}(158, 2)
+		\includegraphics[scale=0.8]{img/logoMCT.jpg}
+	\end{textblock}
+
+
+
+
+
+% Titre / Sous-titre / Auteur / Image de garde:
+%---------------------------------------------------------------------------
+	
+	\flushleft
+	\vspace*{1cm}
+	%\fontfamily{cmr}\selectfont			%To have the default font
+	\fontsize{18pt}{20pt}\selectfont
+	CPNV - Centre Professionnel du Nord Vaudois \\
+	\fontsize{12pt}{15pt}\selectfont\vspace{0.5em}
+	MCT - Modules complémentaires techniqeus
+
+	\vspace{3cm}
+
+	\fontsize{30pt}{32pt}\selectfont 
+	\noindent \textbf{Communication interne} \\
+
+	\fontsize{18pt}{20pt}\selectfont\vspace{0.3em} P2213 \\
+
+	\vspace{4cm}
+	\fontsize{12pt}{15pt}\selectfont
+	\begin{tabbing}
+		xxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxxxxxxx \kill
+		Rédacteur:\> Quentin Surdez\\ \\
+		Relecture:\> Rafael Dousse\\ \\
+		École:\> CPNV\\ \\
+		Date:\> Yverdon-Les-Bains, le \today \\
+	\end{tabbing}
+\end{titlepage}
+%---------------------------------------------------------------------------
+
+%===========================================
+% Table des matières
+%===========================================
+\tableofcontents
+
+%\listoffigures									% Table des figures
+%\listoftables									% Table des tableaux
+\cleardoublepage
+%---------------------------------------------------------------------------
+
+%=============================================================================================
+% Introduction
+%=============================================================================================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Introduction}
+Ce document a pour but d'expliquer et de montrer notre évolution dans la communication interne du robot. La communication interne est la communication entre le Raspberry PI 
+et l'Arduino Nano. 
+
+%=============================================================================================
+% Doc
+%=============================================================================================
+\chapter{Construction}
+\section{UART}
+Nous avons commencé par nous intéresser au protocole de communication UART. 
+
+\section{I2C}
+
+\chapter{Fonctionnement}
+\section{Intégration}
+
+\section{Python}
+
+
+
+\end{document}
