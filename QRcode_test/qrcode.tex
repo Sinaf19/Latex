@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\usepackage{qrcode}
+\usepackage{lmodern}
+\usepackage{ae}
+
+\begin{document}
+    QR code pour donner des ordres au robot :
+    \vspace{3cm}
+    
+    \qrcode[height=5cm]{RIGHT}
+    \hspace{2cm}
+    \quad
+    \qrcode[height=5cm]{LEFT}
+    \vspace{2cm}
+
+    
+    \qrcode[height=5cm]{SOUND}
+    \hspace{2cm}
+    \quad
+    \qrcode[height=5cm]{LIGHT}
+    \vspace{2cm}
+    \newpage
+    
+    
+    \qrcode[height=5cm]{5MENAVANT}
+    \hspace{2cm}
+    \qrcode[height=5cm]{TOURNESURSOI}
+    \vspace{2cm}
+
+    \qrcode[height=5cm]{TOUTDROIT}
+    
+\end{document}

@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\usepackage{siunitx}
+
+\sisetup{
+    round-mode      = places, %Round numbers
+    round-precision = 2, % to 2 places
+}
+
+\usepackage{booktabs}
+
+
+\begin{document}
+
+\begin{table}[h!]
+    \begin{center}
+        \caption{A beautiful table}
+        \vspace{5mm}
+        \label{tab:table1}
+        \begin{tabular}{l|S|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3} & \textbf{Value 4}\\
+            $\alpha$ & $\beta$ & $\gamma$ & $\delta$\\
+            \midrule
+            1 & 1110.1 & a & 5\\
+            2 & 10.1 & b & 5\\
+            \midrule
+            3 & 23.11456 & c & 5\\
+            4 & 583.4 & d & 5\\
+            \midrule
+            5 & 4.4756 & e & 5\\
+            6 & 32456.5 & f & 5\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+\end{table}
+\end{document}
