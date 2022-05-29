@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{enAvant}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+
+\PYG{+w}{  }\PYG{c+c1}{// Limite du nombre d\PYGZsq{}incrémentations pour que le robot fasse 5m depuis l\PYGZsq{}allumage}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{tick\PYGZus{}distance}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{580}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{	}\PYG{n}{setMotor}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Enable1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{In1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{In2}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{setMotor}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Enable2}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{In3}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{In4}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{detachInterrupt}\PYG{p}{(}\PYG{n}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n}{photoElectricSensor}\PYG{p}{));}
+\PYG{+w}{	}\PYG{n}{detachInterrupt}\PYG{p}{(}\PYG{n}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n}{photoElectricSensor1}\PYG{p}{));}
+\PYG{+w}{	}\PYG{n}{detachInterrupt}\PYG{p}{(}\PYG{n}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n}{pin\PYGZus{}PID}\PYG{p}{));}
+\PYG{+w}{	}\PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}5m atteint\PYGZdq{}}\PYG{p}{);}
+\PYG{+w}{	}\PYG{n}{enAvant}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

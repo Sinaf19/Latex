@@ -152,10 +152,10 @@
 	\fancyfoot[CE, CO]{P2213, QS \& RD}
 	\fancyhead[C]{
 	\begin{textblock}{0}[0, 0](5, 8)						%header center part --> logo CPNV + MCT 
-		\includegraphics[scale=0.7]{img/logoCPNV.png}
+		\includegraphics[scale=.7]{img/logoCPNV.png}
 	\end{textblock}
 	\begin{textblock}{0}[0, 0](175, 3)
-		\includegraphics[scale=0.5]{img/logoMCT.jpg}
+		\includegraphics[scale=.5]{img/logoMCT.jpg}
 	\end{textblock}
 	}
 }
@@ -186,8 +186,8 @@
 		\includegraphics[scale=1]{img/logoCPNV.png}
 	\end{textblock}
 
-	\begin{textblock}{0}(158, 2)
-		\includegraphics[scale=0.8]{img/logoMCT.jpg}
+	\begin{textblock}{0}(158, 4)
+		\includegraphics[scale=.7]{img/logoMCT.jpg}
 	\end{textblock}
 
 
@@ -384,9 +384,9 @@ une fonction ou une autre. Nous utilisons un switch pour choisir la fonction. No
  	\item tourneSurSoi(), la fonction qui permet au robot de faire un tour sur lui-même, puis de s'arrêter
   	\item toutDroit(), le robot se met en marche avec le PID et ne s'arrête pas
 \end{itemize}
-\newpage
-Nous allons observer la structure commune de ces fonctions en commençant par cinqMenAvant() : 
 
+\noindent Nous allons observer la structure commune de ces fonctions avec cinqMenAvant() : 
+\newpage
 \begin{figure}[!ht]
 	
 	\usemintedstyle{rainbow_dash}
@@ -416,15 +416,63 @@ Nous pouvons voir ci-dessus que les premières variables que nous changeons sont
 la distance parcourue. Ensuite, la variable $enAvant$ sera approfondie dans le prochain chapitre. \par
 
 Nous voyons enfin ce qui nous intéresse particulièrement, les interruptions attachées. Elles sont à gérer pour
-chaque appel de fonction. Le setup se fait exculsivement à ce moment précis.
+chaque appel de fonction. Le setup des interruptions se fait exculsivement à ce moment précis. Nous choisissons 
+les pins liés aux interruptions, quelle fonction la routine appelera et le mode sur lequel la routine se déclenchera. 
+Ensuite, les consignes moteurs sont définies pour le calcul du PID. \par
 
+Les différentes fonctions utilisées, ont toutes la même strucutre avec de léger changement comme la consigne moteur qui
+est à 0 sur un moteur pour que le robot tourne sur lui-même. Cependant, si un clean up n'est pas correctement effectué 
+avant l'appel d'une autre fonction, les interruptions ne se comporteront pas de la bonne manière. Ainsi, il 
+faut remettre les différentes valeurs à zéro. 
 
-\newpage
 \section{Remise à zéro des valeurs}
 
+La remise à zéro des valeurs s'effectue à la sortie des fonctions, ou plus précisément, lorsque ces dernières 
+ont rempli le rôle qui leur était attribué. La limite de ce système est qu'il ne gère pas le cas où 
+une fonction n'est pas finie et une autre est appelée. \par
 
+Les variables que nous changeons dans les fonctions comme $enAvant$ nous servent à désattacher les interruptions
+lorsque le travail de la fonction est terminée. Cette action se fait dans le loop() de notre script Arduino. \par
 
+\noindent Voici un exemple pour la fonction cinqMenAvant() : 
+\newpage
+\begin{figure}[!ht]
+	
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{c}
 
+if (enAvant == 1){
+  
+  // Limite du nombre d'incrémentations pour que le robot fasse 5m depuis l'allumage
+  if (tick_distance >= 580){
+	setMotor(1, 0, Enable1, In1, In2);
+	setMotor(1, 0, Enable2, In3, In4);
+	detachInterrupt(digitalPinToInterrupt(photoElectricSensor));
+	detachInterrupt(digitalPinToInterrupt(photoElectricSensor1));
+	detachInterrupt(digitalPinToInterrupt(pin_PID));
+	Serial.println("5m atteint");
+	enAvant= 0;
+  }
+}
+	\end{minted}
+	\caption{Clean up de la fonction cinqMenAvant()}
+	\label{remise0}
+	\end{figure}
 
+ Pour rentrer dans le $if$ principal, il faut que la fonction cinqMenAvant() ait été appelée. Ensuite, nous avons
+ la condition qui déclenche le clean up. Au début du clean up, les moteurs sont forcés à 0 par la fonction setMotor(). 
+ Ensuite, les interruptions sont détachées. Celle qui permet de calculer le PID est la plus importante pour 
+ être certain qu'aucun calcul ne sera effectué. Enfin, une mise à zéro de la variable $enAvant$ permet de sortir 
+ du clean up. 
+
+ \chapter{Conclusion}
+ Nous avons pu nous intéresser aux différentes composantes du script de notre Arduino Nano Every. Cela permettra au 
+ lecteur attentif de gérer et adapter le code écrit selon ses besoins. Le peu de fonctions qui n'ont pas été introduites
+ dans le document, possèdent suffisamment de commentaires pour être clair et compréhensible par le lecteur. \par
+
+ Le développement du code se sera fait à travers maintes itérations. La version présentée aujourd'hui est dans 
+ sa phase finale. Incorporant la communication avec le Raspberry PI, elle se veut prête à répondre aux 
+ besoins du projet. La flexibilité des attachInterrupt() et detachInterrupt() permettent facilement de passer
+ d'une fonction à l'autre, aussi longtemps que le clean up est correctement effectué.
 
 \end{document}
