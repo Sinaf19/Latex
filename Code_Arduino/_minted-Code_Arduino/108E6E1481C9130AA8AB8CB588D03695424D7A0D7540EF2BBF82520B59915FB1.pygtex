@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{+w}{	}\PYG{c+c1}{// Set up du programme tourner sur soi \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{+w}{	}\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{tourneSurSoi}\PYG{p}{()\PYGZob{}}
+\PYG{+w}{	}
+\PYG{+w}{	  }\PYG{c+c1}{//Interruption sur les pins pour routine des fonctions}
+\PYG{+w}{	  }\PYG{n}{attachInterrupt}\PYG{p}{(}\PYG{n}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n}{photoElectricSensor}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{compteurDistance}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RISING}\PYG{p}{);}
+\PYG{+w}{	  }\PYG{n}{attachInterrupt}\PYG{p}{(}\PYG{n}{digitalPinToInterrupt}\PYG{p}{(}\PYG{n}{pin\PYGZus{}PID}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{asservissement}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RISING}\PYG{p}{);}
+\PYG{+w}{	}
+\PYG{+w}{	  }\PYG{c+c1}{//fixation des consgines}
+\PYG{+w}{	  }\PYG{n}{consigne\PYGZus{}moteur}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{+w}{	  }\PYG{n}{consigne\PYGZus{}moteur1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{+w}{	}
+\PYG{+w}{	  }\PYG{c+c1}{//mise à 1 de la valeur inérante}
+\PYG{+w}{	  }\PYG{n}{tourner}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{	}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

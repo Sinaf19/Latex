@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Communication avec le Raspberry via I2C \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{receiveEvent}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{howMany}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{while}\PYG{p}{(}\PYG{n}{Wire}\PYG{p}{.}\PYG{n}{available}\PYG{p}{())\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{c}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{Wire}\PYG{p}{.}\PYG{n}{read}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{switch}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{c}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{case}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{:}
+\PYG{+w}{      }\PYG{n}{cinqMenAvant}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{case}\PYG{+w}{ }\PYG{l+m+mi}{4}\PYG{p}{:}
+\PYG{+w}{      }\PYG{n}{tourneSurSoi}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{case}\PYG{+w}{ }\PYG{l+m+mi}{10}\PYG{p}{:}
+\PYG{+w}{      }\PYG{n}{toutDroit}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k}{break}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

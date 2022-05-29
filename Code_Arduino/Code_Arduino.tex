@@ -44,6 +44,7 @@
 \usepackage{colortbl}
 \usepackage{listings}
 \usepackage{minted}
+\usepackage{ragged2e}
 \captionsetup{font=small}
 
 
@@ -230,7 +231,7 @@
 
 \listoffigures									% Table des figures
 %\listoftables									% Table des tableaux
-\listoflistings % Now typeset the list
+%\listoflistings % Now typeset the list
 \cleardoublepage
 %---------------------------------------------------------------------------
 
@@ -266,7 +267,7 @@ utilisons pour construire notre asservissement. \par
 Pour utiliser les différents facteurs, nous devons premièrement calculer l'erreur. Elle est la différence entre la consigne et la vitesse observée. Nous appliquons le facteur proportionnel directement à l'erreur.
 Le facteur intégratif est appliqué à la somme des erreurs sur le temps. Enfin, le facteur dérivateur s'applique sur la différence des erreurs sur le temps. \par
 
-	\begin{center}
+
 
 L'équation pour le calcul de la valeur de contrôle est la suivante : 
 		\begin{figure}[h]
@@ -274,7 +275,7 @@ L'équation pour le calcul de la valeur de contrôle est la suivante :
 			\caption{Équation du PID}
 			\label{eq1}
 		\end{figure}
-	\end{center} 
+
 
 Les différents calculs se font par rapport à un $dt$, cette particularité est très importante et a permis de diriger le développement du code. Pour mieux comprendre l'intégration de l'équation dans le code 
 une image permet de visualiser le processus : 
@@ -285,7 +286,7 @@ une image permet de visualiser le processus :
 		\label{PIDfig}
 		\caption{Intégration de l'erreur et du PID}
 	\end{figure}
-
+\par
 
 
 \chapter{Interruptions}
@@ -301,15 +302,19 @@ La librairie Arduino permet d'utiliser une fonction appelée attachInterrupt(). 
 
 Cela a été mis en place pour notre projet en incorporant un Arduino gérant exclusivement le temps. Toutes les $x$ secondes, un signal est envoyé à l'Arduino se chargeant de calculer le PID. Un schéma permet de visualier 
 le processus : 
+\par
+
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.2]{img/interruptions_attachees.jpg}
 	\label{IntSch}
 	\caption{Schéma des interruptions attachées}
+	
 \end{figure}
 
+
 \chapter{Code}
-pygme
+
 Le code a été écrit dans le but de répondre au besoin de notre projet. Les fonctions le composant et la logique appliquée
 seront discutés dans les prochains sous-chapitres. Premièrement, une explication du code nécessaire au setup de la
 communication I2C, puis donner de plus grandes explications que les commentaires sur les fonctions créées. Enfin, une
@@ -318,34 +323,103 @@ elles sans compromettre l'intégrité de l'ensemble.
 
 \section{Communication I2C}
 
+La communication I2C est celle que nous utilisons dans le cadre de notre projet. Ce mode de communication est rapide (moins d'une seconde) et permet de rajouter des slaves facilement
+dépandamment de nos besoins. La librairie Wire.h avec Arduino permet une mise en place simple des différentes fonctions utilisées. \par
 
-\begin{listing}[!ht]
-\usemintedstyle{rainbow_dash}
-\begin{minted}{c}
-// Set up du programme tourner sur soi ---------------------------
-void tourneSurSoi(){
+Pour commencer, son setup est composé de deux fonctions. La première est celle déterminant l'adresse donnée au microcontrôleur slave et la deuxième est celle qui détermine quelle
+fonction appelée lorsque le slave reçoit un ordre du master. Les voici : 
+\begin{figure}[!ht]
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{c}
+// Set up de la communication avec le Raspberry PI via I2C -----------------
+Wire.begin(0x08);
+Wire.onReceive(receiveEvent);
+	\end{minted}
+	\caption{Setup I2C}
+	\label{codeI2C}
+	\end{figure}
 
-  
-  attachInterrupt(digitalPinToInterrupt(photoElectricSensor), compteurDistance, RISING);
-  attachInterrupt(digitalPinToInterrupt(pin_PID), asservissement, RISING);  
+Nous pouvons voir que nous choisissons l'adresse 08 et qu'une fonction (receiveEvent) est appelée à chaque
+fois que l'Arduino reçoit une information de la part du maître soit le Raspberry PI dans notre cas. 
 
- 
-  consigne_moteur = 2;
-  consigne_moteur1 = 0;
-
-  tourner = 1;
-
-}
-\end{minted}
-\caption{Fonction du robot en C}
-\label{listing:2}
-\end{listing}
-
-
+\newpage
 \section{Fonctions appelées}
 
+La première fonction appelée lors de la réception d'un ordre est donc, comme vu ci-dessus, receiveEvent(). 
+Voici sa structure : 
+
+\begin{figure}[!ht]
+	
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{c}
+// Communication avec le Raspberry via I2C --------------
+void receiveEvent(int howMany){
+  while(Wire.available()){
+    int c = Wire.read();
+    switch (c)
+    {
+    case 3:
+      cinqMenAvant();
+    break;
+    case 4:
+      tourneSurSoi();
+    break;
+    case 10:
+      toutDroit();
+    break;
+    }
+  }
+}
+	\end{minted}
+	\caption{Fonction de réception et de commande}
+	\label{receiveEvent}
+	\end{figure}
+
+Nous pouvons voir que la fonction vérifie en premier lieu que le bus I2C est libre. Ensuite on stock la valeur 
+qu'on lit sur le bus dans une variable locale. Cette dernière, dépendamment de sa valeur permet d'enclencher 
+une fonction ou une autre. Nous utilisons un switch pour choisir la fonction. Nous avons ici trois cas :
+
+\begin{itemize}
+	\item cinqMenAvant(), la fonction qui permet au robot d'aller tout droit pendant 5$m$, puis de s'arrêter
+ 	\item tourneSurSoi(), la fonction qui permet au robot de faire un tour sur lui-même, puis de s'arrêter
+  	\item toutDroit(), le robot se met en marche avec le PID et ne s'arrête pas
+\end{itemize}
+\newpage
+Nous allons observer la structure commune de ces fonctions en commençant par cinqMenAvant() : 
+
+\begin{figure}[!ht]
+	
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{c}
+// Set up du programme 5m en avant --------------------------------------
+void cinqMenAvant(){
+  
+  tick_distance=0;
+  tick_distance1=0;
+  enAvant = 1;
+
+  //Interruptions 
+  attachInterrupt(digitalPinToInterrupt(photoElectricSensor), compteurDistance, RISING);
+  attachInterrupt(digitalPinToInterrupt(photoElectricSensor1), compteurDistance1, RISING);
+  attachInterrupt(digitalPinToInterrupt(pin_PID), asservissement, RISING);
+
+  //On donne une consigne petite pour être sûr que le robot va tout droit
+  consigne_moteur = 2;
+  consigne_moteur1  = 2;
+}
+	\end{minted}
+	\caption{Fonction pour se déplacer 5m en avant}
+	\label{cinqMenAvant}
+	\end{figure}
+Nous pouvons voir ci-dessus que les premières variables que nous changeons sont celles qui sont inhérentes
+à la fonction. Les $tick\_distance$ permettent de s'assurer qu'ils soient à zéro au lancement. Ce sont eux qui gèreront
+la distance parcourue. Ensuite, la variable $enAvant$ sera approfondie dans le prochain chapitre. \par
+
+Nous voyons enfin ce qui nous intéresse particulièrement, les interruptions attachées. Elles sont à gérer pour
+chaque appel de fonction. Le setup se fait exculsivement à ce moment précis.
 
 
+\newpage
 \section{Remise à zéro des valeurs}
 
 

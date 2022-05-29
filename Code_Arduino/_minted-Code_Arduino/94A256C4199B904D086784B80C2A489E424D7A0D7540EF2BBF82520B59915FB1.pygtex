@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Set up de la communication avec le Raspberry PI via I2C \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{+w}{    }\PYG{n}{Wire}\PYG{p}{.}\PYG{n}{begin}\PYG{p}{(}\PYG{l+m+mh}{0x08}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{Wire}\PYG{p}{.}\PYG{n}{onReceive}\PYG{p}{(}\PYG{n}{receiveEvent}\PYG{p}{);}
+\end{Verbatim}
