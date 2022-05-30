@@ -118,8 +118,8 @@
 %---------------------------------------------------------------------------
 \usepackage[
 	a4paper,
-	left=28mm,
-	right=15mm,
+	left=30mm,
+	right=30mm,
 	top=30mm,
 	headheight=20mm,
 	headsep=10mm,
@@ -217,7 +217,7 @@
 	\begin{tabbing}
 		xxxxxxxxxxxxxxx\=xxxxxxxxxxxxxxxxxxxxxxx \kill
 		Rédacteur:\> Quentin Surdez\\ \\
-		Relecture:\> Rafael Dousse\\ \\
+		Relecture:\> Rafael Dousse \& Julien Desgraz\\ \\
 		École:\> CPNV\\ \\
 		Date:\> Yverdon-Les-Bains, le \today \\
 	\end{tabbing}
@@ -399,9 +399,12 @@ void cinqMenAvant(){
   enAvant = 1;
 
   //Interruptions 
-  attachInterrupt(digitalPinToInterrupt(photoElectricSensor), compteurDistance, RISING);
-  attachInterrupt(digitalPinToInterrupt(photoElectricSensor1), compteurDistance1, RISING);
-  attachInterrupt(digitalPinToInterrupt(pin_PID), asservissement, RISING);
+  attachInterrupt(digitalPinToInterrupt(photoElectricSensor), 
+  compteurDistance, RISING);
+  attachInterrupt(digitalPinToInterrupt(photoElectricSensor1), 
+  compteurDistance1, RISING);
+  attachInterrupt(digitalPinToInterrupt(pin_PID), 
+  asservissement, RISING);
 
   //On donne une consigne petite pour être sûr que le robot va tout droit
   consigne_moteur = 2;
