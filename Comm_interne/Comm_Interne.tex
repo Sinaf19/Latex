@@ -42,6 +42,9 @@
 \usepackage{pst-all}								%Better handling of texts and images
 \usepackage{mathrsfs}
 \usepackage{colortbl}
+\usepackage{minted}
+\usepackage{ragged2e}
+\captionsetup{font=small}
 
 
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
@@ -105,7 +108,7 @@
 	pdfsubject = {Promotion 21-22},        				% PDF-property
 	linkcolor = {linkcolor},              					% Color of Links
 	citecolor = {linkcolor},              					% Color of Cite-Links
-	urlcolor = {linkcolor},               					% Color of URLs
+	urlcolor = {linkblue},               					% Color of URLs
 ]{hyperref}
 %---------------------------------------------------------------------------
 
@@ -113,14 +116,15 @@
 %---------------------------------------------------------------------------
 \usepackage[
 	a4paper,
-	left=28mm,
-	right=15mm,
+	left=30mm,
+	right=30mm,
 	top=30mm,
 	headheight=20mm,
 	headsep=10mm,
 	textheight=242mm,
 	footskip=15mm
 ]{geometry}
+\setlength\parindent{20pt}
 %---------------------------------------------------------------------------
 
 % Makeindex Package
@@ -221,7 +225,7 @@
 %===========================================
 \tableofcontents
 
-%\listoffigures									% Table des figures
+\listoffigures									% Table des figures
 %\listoftables									% Table des tableaux
 \cleardoublepage
 %---------------------------------------------------------------------------
@@ -233,23 +237,135 @@
 \setcounter{page}{1}
 
 \chapter{Introduction}
-Ce document a pour but d'expliquer et de montrer notre évolution dans la communication interne du robot. La communication interne est la communication entre le Raspberry PI 
-et l'Arduino Nano. 
+Ce document a pour but d'expliquer et de montrer notre évolution dans la communication interne du robot. 
+La communication interne est la communication entre le Raspberry PI et l'Arduino Nano. 
+Nous allons en premier lieu discuter des différents protocoles que nous avons pu essayer. Ensuite, nous parlerons
+de son intégration dans le projet pour chaque protocole. Nous verrons dans la conclusion notre choix final et nous argumenterons ce choix. 
 
 %=============================================================================================
 % Doc
 %=============================================================================================
 \chapter{Construction}
+
+La construction du protocole s'est faite de manière organique. Nous avons regardé plusieurs tutos sur internet 
+pour nous familiariser avec les communications entre le Raspberry PI et l'Arduino Nano Every. Ces éléments sont les 
+seuls nécessitants une communication particulière au sein de notre projet. 
+
 \section{UART}
-Nous avons commencé par nous intéresser au protocole de communication UART. 
+
+Nous avons commencé par nous intéresser au protocole de communication UART ou sérielle. Nous avons suivi un tuto
+de : \href{https://www.aranacorp.com/fr/communication-serie-entre-raspberry-pi-et-arduino/}{aranacorp.com}. Ce tutoriel
+nous a permis de prendre en main la communication. \par
+
+Le code permettant de set up le Raspberry PI pour cette communication est quelque peu complexe. Le voici : 
+
+\begin{figure}[!ht]
+	
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{python}
+
+import serial,time
+if __name__ == '__main__':
+    
+    with serial.Serial("/dev/ttyACM0", 9600, timeout=1) as arduino:
+        time.sleep(0.1) #wait for serial to open
+        if arduino.isOpen():
+            #print("{} connected!".format(arduino.port))
+            try:
+                while True:
+                    #cmd=input("Enter command : ")
+                    arduino.write(cmd.encode())
+
+
+	\end{minted}
+	\caption{Set up du RPI pour comm UART}
+	\label{UARTcomm}
+	\end{figure}
+
+Nous pouvons observer que le set up est complexe et apparaît difficile à intégrer dans les différents programmes
+que nous allons développer par la suite. Nous devons tout d'abord spécifier le port sur lequel l'Arduino est connecté. 
+Ensuite, il faut écrire la commande. Du côté de l'Arduino, la librairie Serial est utilisée. \par
+
+Le plus grand désavantage de cette communication est le temps que prennent les informations pour être échangées. 
+En effet, la vitesse de l'UART est définie par le $baudrate$ utilisé. Cependant, l'Arduino a un petit buffer et 9600 est la valeur par défaut. 
+Donc la vitesse est de 9600bit/s. 
+Qui plus est, la library pyserial est limitée à la lecture et l'envoi d'un byte. Des paramètrages peuvent être effectués pour en lire et en envoyer plus. 
+Cependant cela impact la vitesse d'envoi et de réception. \par
+
 
 \section{I2C}
 
-\chapter{Fonctionnement}
-\section{Intégration}
+En prenant connaissance des limites de la communication UART, nous nous sommes intéressés à la communication 
+via le protocole I2C. Nous avons pu découvrir le code via un tutoriel : \href{https://www.thegeekpub.com/18263/raspberry-pi-to-arduino-i2c-communication/}
+{thegeekpub.com}. Cela nous a permis de prendre en main le code à utiliser pour set up la communication du côté 
+du Raspberry PI et de l'Arduino. \par 
 
-\section{Python}
+Voici le code du set up : 
+
+\begin{figure}[!ht]
+	
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{python}
+
+import smbus from SMBus
+	
+addr = 0x08
+bus = SMBus(1)
+
+while True:
+	bus.write_byte(addr, 1)
 
 
+	\end{minted}
+	\caption{Set up de l'I2C du RPI}
+	\label{I2Ccomm}
+	\end{figure}
+
+Nous pouvons observer que du côté du Raspberry le set up est rapide et simple. Du côté de l'Arduino la librairie Wire
+est utilisée. Voici le set up : 
+
+\begin{figure}[!ht]
+	
+	\usemintedstyle{rainbow_dash}
+	\begin{minted}{c}
+#include<Wire.h>
+
+void receiveEvent(int howMany)
+{while (Wire.available())
+  {int c = Wire.read();
+	switch (c)
+    {case 1:
+        Enavant();
+      break;}}}
+void setup()
+{ Wire.begin(0x8);
+  Wire.onReceive(receiveEvent);}
+
+	\end{minted}
+	\caption{Set up de l'I2C de l'Arduino}
+	\label{I2CcommArduino}
+	\end{figure}
+
+Nous pouvons voir que le set up en lui-même consiste de l'appel de deux fonction Wire.begin et Wire.onReceive. L'adresse
+doit être la même que celle donnée dans le Raspberry PI. Ensuite la fonction receiveEvent() permet de déterminer selon
+l'ordre reçu d'appeler telle ou telle fonction dans notre code. Cette fonctionnalité est détaillée dans le document "Explication Code Arduino". \par
+
+La communication par I2C possède plusieurs avantages. Elle est plus rapide que l'UART, soit 100kbits/s. Elle est plus facile à intégrer dans les
+programmes que nous créons. Elle est flexible, c'est-à-dire que nous pouvons intégrer plusieurs Arduino slaves si 
+nous en avons le besoin dans le futur. \par
+
+\chapter{Conclusion}
+
+Nous avons pu observer les différents protocoles testés dans le cadre de notre projet. Nous avons choisi le protocole 
+de communication I2C. Les raisons pour ce choix sont les suivantes : 
+
+\begin{itemize}
+	\item Rapidité de la transmission de l'information
+ 	\item Flexibilité pour ajouter des slaves qui communiqueraient avec le Raspberry
+  	\item Intégration facilitée dans les codes que nous créons et aucune incompatibilité avec le module de caméra ou OpenCV
+\end{itemize}
+
+Tous les codes incorporant une communication critique, possède le set up pour l'I2C du côté de l'Arduino et du côté du
+Raspberry PI. 
 
 \end{document}

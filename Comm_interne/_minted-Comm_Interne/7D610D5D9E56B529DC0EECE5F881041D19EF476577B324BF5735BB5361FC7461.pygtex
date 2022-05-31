@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{serial}\PYG{o}{,}\PYG{n+nn}{time}
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZsq{}}\PYG{p}{:}
+
+    \PYG{c+c1}{\PYGZsh{}print(\PYGZsq{}Running. Press CTRL\PYGZhy{}C to exit.\PYGZsq{})}
+    \PYG{k}{with} \PYG{n}{serial}\PYG{o}{.}\PYG{n}{Serial}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}/dev/ttyACM0\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{9600}\PYG{p}{,} \PYG{n}{timeout}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{k}{as} \PYG{n}{arduino}\PYG{p}{:}
+        \PYG{n}{time}\PYG{o}{.}\PYG{n}{sleep}\PYG{p}{(}\PYG{l+m+mf}{0.1}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{}wait for serial to open}
+        \PYG{k}{if} \PYG{n}{arduino}\PYG{o}{.}\PYG{n}{isOpen}\PYG{p}{():}
+            \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}\PYGZob{}\PYGZcb{} connected!\PYGZdq{}.format(arduino.port))}
+            \PYG{k}{try}\PYG{p}{:}
+                \PYG{k}{while} \PYG{k+kc}{True}\PYG{p}{:}
+                    \PYG{c+c1}{\PYGZsh{}cmd=input(\PYGZdq{}Enter command : \PYGZdq{})}
+                    \PYG{n}{arduino}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{n}{cmd}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{())}
+                    \PYG{c+c1}{\PYGZsh{}time.sleep(0.1) \PYGZsh{}wait for arduino to answer}
+                    \PYG{k}{while} \PYG{n}{arduino}\PYG{o}{.}\PYG{n}{inWaiting}\PYG{p}{()}\PYG{o}{==}\PYG{l+m+mi}{0}\PYG{p}{:} \PYG{k}{pass}
+                    \PYG{k}{if}  \PYG{n}{arduino}\PYG{o}{.}\PYG{n}{inWaiting}\PYG{p}{()}\PYG{o}{\PYGZgt{}}\PYG{l+m+mi}{0}\PYG{p}{:}
+                        \PYG{n}{answer}\PYG{o}{=}\PYG{n}{arduino}\PYG{o}{.}\PYG{n}{readline}\PYG{p}{()}
+                        \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{answer}\PYG{p}{)}
+                        \PYG{n}{arduino}\PYG{o}{.}\PYG{n}{flushInput}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{}remove data after reading}
+            \PYG{c+c1}{\PYGZsh{}except KeyboardInterrupt:}
+                \PYG{c+c1}{\PYGZsh{}print(\PYGZdq{}KeyboardInterrupt has been caught.\PYGZdq{})}
+\end{Verbatim}

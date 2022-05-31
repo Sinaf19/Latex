@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{k+kn}{import} \PYG{n+nn}{smbus} \PYG{k+kn}{from} \PYG{n+nn}{SMBus}
+	
+\PYG{n}{addr} \PYG{o}{=} \PYG{l+m+mh}{0x08}
+\PYG{n}{bus} \PYG{o}{=} \PYG{n}{SMBus}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{k}{while} \PYG{k+kc}{True}\PYG{p}{:}
+	\PYG{n}{bus}\PYG{o}{.}\PYG{n}{write\PYGZus{}byte}\PYG{p}{(}\PYG{n}{addr}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}
+
+
+\end{Verbatim}
