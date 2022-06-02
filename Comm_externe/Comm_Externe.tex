@@ -105,7 +105,7 @@
 	pdfsubject = {Promotion 21-22},        				% PDF-property
 	linkcolor = {linkcolor},              					% Color of Links
 	citecolor = {linkcolor},              					% Color of Cite-Links
-	urlcolor = {linkcolor},               					% Color of URLs
+	urlcolor = {linkblue},               					% Color of URLs
 ]{hyperref}
 %---------------------------------------------------------------------------
 
@@ -113,14 +113,15 @@
 %---------------------------------------------------------------------------
 \usepackage[
 	a4paper,
-	left=28mm,
-	right=15mm,
+	left=30mm,
+	right=30mm,
 	top=30mm,
 	headheight=20mm,
 	headsep=10mm,
 	textheight=242mm,
 	footskip=15mm
 ]{geometry}
+\setlength\parindent{20pt}
 %---------------------------------------------------------------------------
 
 % Makeindex Package
@@ -145,7 +146,7 @@
 	\fancyfoot[OL, ER]{\footnotesize \leftmark}			%footer left part --> chapter
 	\fancyfoot[CE, CO]{P2213, QS \& RD}
 	\fancyhead[C]{
-	\begin{textblock}{0}[0, 0](5, 8)						%header center part --> logo CPNV + MCT 
+	\begin{textblock}{0}[0, 0](10, 8)						%header center part --> logo CPNV + MCT 
 		\includegraphics[scale=0.7]{img/logoCPNV.png}
 	\end{textblock}
 	\begin{textblock}{0}[0, 0](175, 3)
@@ -233,24 +234,81 @@
 \setcounter{page}{1}
 
 \chapter{Introduction}
-Ce document a pour but d'expliquer notre construction de la communication externe du robot. La communication externe se compose du Raspberry PI, de l'Arduino Nano ainsi que d'un objet connecté via un réseau WIFI à notre Raspberry PI. 
+Ce document a pour but d'expliquer notre construction de la communication externe du robot. 
+La communication externe se compose du Raspberry PI, de l'Arduino Nano ainsi que d'un 
+objet connecté via un réseau WIFI à notre Raspberry PI. Nous discuterons de nos approches pour utiliser la communication
+et de comment nous avons résolu les différents problèmes que nous avons rencontrés. 
 
 %=============================================================================================
 % Document
 %=============================================================================================
 \chapter{HotSpot}
+
+Nous avons tout d'abord voulu faire de notre Raspberry PI un hotspot WIFI. Un hotspot est un endroit
+qui permet de se connecter, la plupart du temps à internet, via le WIFI. Le WIFI est un protocole de
+communication par ondes radio qui permet de relier ensemble plusieurs appareils électroniques. \par
+
 \section{Apache}
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.2]{img/Apache.png}
+	\label{Apache}
+	\caption{Logo du serveur Web Apache}
+\end{figure}
+
+Apache est la première alternative que nous avons essayé. C'est un serveur Web HTTP qui aurait permis d'héberger notre web
+application. Nous l'avons peu à peu pris en main et nous avons réussi à utiliser le Raspberry en hotspot. Cependant, Apache 
+restait relativement obscure pour nous. Les différentes possibilités qu'Apache offrait ne correspondait pas à nos besoins. 
+Nous ne souhaitions pas héberger sur le web une application, nous ne souhaitions pas faire de notre Raspberry PI un serveur. \par
 
 \section{ROS}
 
+Nous avons eu une autre alternative pour faire de notre Raspberry PI hotspot. Le système d'exploitation ROS, pour Robotic Operating System, 
+nous offrait cette possibilité, tout en étant pensé et developpé pour des robots. Nous avons pris connaissance des possibilités 
+que cet OS offrait, comme la création de noeud de communications. Cependant, nous avons vite compris que ROS était principalement
+fait pour des robots industriels ou de qualité supérieure au notre. Après plusieurs tentatives, nous n'avons pas réussi à installer 
+l'OS sur notre Raspberry PI. Nous nous sommes éloignés de l'idée de paramétré notre Raspberry PI en hotspot. \par
+
 \chapter{Réseau}
+
+Nous nous sommes tournés vers une alternative. Le partage de connexion. En effet, plusieurs appareils connectés au même
+réseau peuvent communiquer entre eux via adresse IP et port. Les adresses IP sont assignés pour chaque appareil sur 
+le réseau. Les ports logiciels sont ceux utilisés principalement par les protocoles de communications standards comme TCP ou 
+HTTP. Nous pouvons assigné une web app à une adresse IP spécifique et un port spécifique. Ce qui nous permet d'y accéder via 
+un appareil connecté au même réseau que le Raspberry PI. \par
+
+Le nouveau challenge avec cette méthode était d'avoir une page web intéractive dont nous pouvions recevoir les informations
+et les transmettre à notre script en Pyhton. Donc de passer à du HTML, Javascript à du Python pour pouvoir envoyer via I2C 
+à noter Arduino. \par
+
 \section{Flask}
-\section{WebStreaming}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.3]{img/Flask.png}
+	\vspace{.5cm}
+	\label{Flask}
+	\captionabove{Logo du micro-framework Flask}
+\end{figure}
+
+Nous avons découvert via un tutoriel \href{https://pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/}{pyimagesearch.com}
+la possibilité d'utiliser le micro-framework Flask pour facilement intéragir avec une web application via notre script Python.
+Un framework est un logiciel facilitant l'intéraction avec un utilisateur, donc facilitant la création d'applications. 
+Flask est un micro-framework car il ne nécessite aucune librairies ou fichier additionnel pour fonctionner. Des extensions
+existent pour, par exemple, lui ajouter une fonctionnalité de database avec SQLAlchemy. \par
+
+Ainsi, Flask nous a permis de communiquer avec une page web et de communiquer l'information donnée sur cette page 
+à notre script Pyhton. L'information récupérée peut être utilisée dans notre programme. 
+Ce protocole est celui que nous avons choisi pour notre communication externe. Nous pouvons nous intéresser de plus 
+près sur la strucutre de notre web app. \par
 
 \chapter{Apprentissage HTML/CSS}
+
 \section{Site Web}
 
+Le site web a été pensé pour être en premier lieu pratique. Nous avons d'abord un menu qui nous permet de choisir 
+quel mode nous souhaitons.
 
 
 \end{document}
