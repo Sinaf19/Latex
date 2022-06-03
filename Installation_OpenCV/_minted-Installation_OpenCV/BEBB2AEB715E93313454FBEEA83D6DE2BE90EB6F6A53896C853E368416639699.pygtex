@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{l+s+se}{\PYGZbs{}u}semintedstyle\PYG{o}{\PYGZob{}}rainbow\PYGZus{}dash\PYG{o}{\PYGZcb{}}
+	sudo apt update
+	sudo apt upgrade
+\end{Verbatim}

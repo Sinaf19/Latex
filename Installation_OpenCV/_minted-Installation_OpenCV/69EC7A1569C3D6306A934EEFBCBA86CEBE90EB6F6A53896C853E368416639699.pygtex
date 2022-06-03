@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYGZhy{}\PYGZhy{}   Python \PYG{l+m}{3}:
+	\PYGZhy{}\PYGZhy{}     Interpreter:                 /usr/bin/python3.9 \PYG{o}{(}ver \PYG{l+m}{3}.9.x\PYG{o}{)}
+	\PYGZhy{}\PYGZhy{}     Libraries:                   /usr/lib/x86\PYGZus{}64\PYGZhy{}linux\PYGZhy{}gnu/libpython3.4m.so \PYG{o}{(}ver \PYG{l+m}{3}.9.x\PYG{o}{)}
+	\PYGZhy{}\PYGZhy{}     numpy:                       /usr/lib/python3/dist\PYGZhy{}packages/numpy/core/include \PYG{o}{(}ver \PYG{l+m}{1}.8.2\PYG{o}{)}
+	\PYGZhy{}\PYGZhy{}     packages path:               lib/python3.4/dist\PYGZhy{}packages
+\end{Verbatim}

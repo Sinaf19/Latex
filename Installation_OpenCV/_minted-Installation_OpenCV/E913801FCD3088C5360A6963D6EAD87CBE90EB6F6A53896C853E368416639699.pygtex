@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt\PYGZhy{}get install libavcodec\PYGZhy{}dev libavformat\PYGZhy{}dev libswscale\PYGZhy{}dev libv4l\PYGZhy{}dev
+	sudo apt\PYGZhy{}get install libxvidcore\PYGZhy{}dev libx264\PYGZhy{}dev
+\end{Verbatim}

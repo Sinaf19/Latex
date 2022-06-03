@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt install libhdf5\PYGZhy{}dev libhdf5\PYGZhy{}serial\PYGZhy{}dev libhdf5\PYGZhy{}103
+	sudo apt install libqt5gui5 libqt5webkit5 libqt5test5 python3\PYGZhy{}pyqt5
+\end{Verbatim}

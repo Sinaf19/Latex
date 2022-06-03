@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt install libfontconfig1\PYGZhy{}dev libcairo2\PYGZhy{}dev
+	sudo apt install libgdk\PYGZhy{}pixbuf2.0\PYGZhy{}dev libpango1.0\PYGZhy{}dev
+	sudo apt install libgtk2.0\PYGZhy{}dev libgtk\PYGZhy{}3\PYGZhy{}dev
+\end{Verbatim}

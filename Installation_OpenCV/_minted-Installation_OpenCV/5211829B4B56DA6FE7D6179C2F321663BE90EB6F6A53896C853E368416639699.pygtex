@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt\PYGZhy{}get install python3\PYGZhy{}dev python3\PYGZhy{}numpy
+\end{Verbatim}

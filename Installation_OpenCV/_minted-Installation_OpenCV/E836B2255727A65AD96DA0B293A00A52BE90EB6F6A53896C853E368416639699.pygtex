@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt\PYGZhy{}get install libjpeg\PYGZhy{}dev libtiff5\PYGZhy{}dev libjasper\PYGZhy{}dev libpng\PYGZhy{}dev
+\end{Verbatim}

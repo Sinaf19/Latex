@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	python
+	\PYGZgt{}\PYGZgt{}\PYGZgt{} import cv2
+	\PYGZgt{}\PYGZgt{}\PYGZgt{} cv2.\PYGZus{}\PYGZus{}version\PYGZus{}\PYGZus{}
+\end{Verbatim}

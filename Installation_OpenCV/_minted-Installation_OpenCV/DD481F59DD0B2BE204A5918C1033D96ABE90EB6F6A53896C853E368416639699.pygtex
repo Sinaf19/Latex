@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt\PYGZhy{}get install build\PYGZhy{}essential cmake pkg\PYGZhy{}config
+\end{Verbatim}

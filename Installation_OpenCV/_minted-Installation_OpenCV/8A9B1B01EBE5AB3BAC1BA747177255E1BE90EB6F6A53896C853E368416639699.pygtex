@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n+nb}{cd} \PYGZti{}/opencv
+	mkdir build
+	\PYG{n+nb}{cd} build
+\end{Verbatim}

@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt\PYGZhy{}get install git
+	git clone https://github.com/opencv/opencv.git
+\end{Verbatim}

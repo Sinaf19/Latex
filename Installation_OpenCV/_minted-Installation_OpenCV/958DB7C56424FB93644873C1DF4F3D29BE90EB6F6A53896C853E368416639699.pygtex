@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt update
+	sudo apt upgrade
+\end{Verbatim}
