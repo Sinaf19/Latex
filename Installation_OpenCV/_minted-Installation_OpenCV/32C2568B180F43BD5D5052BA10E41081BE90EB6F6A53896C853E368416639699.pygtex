@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo /etc/init.d/dphys\PYGZhy{}swapfile stop
+	sudo /etc/init.d/dphys\PYGZhy{}swapfile start
+\end{Verbatim}
