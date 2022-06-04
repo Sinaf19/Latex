@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	sudo apt install libhdf5\PYGZhy{}dev libhdf5\PYGZhy{}serial\PYGZhy{}dev libhdf5\PYGZhy{}103
+	sudo apt install libqt5gui5 libqt5webkit5 libqt5test5 python3\PYGZhy{}pyqt5
+	sudo apt install libgstreamer\PYGZhy{}plugins\PYGZhy{}base1.0\PYGZhy{}dev libgstreamer1.0\PYGZhy{}dev
+\end{Verbatim}
