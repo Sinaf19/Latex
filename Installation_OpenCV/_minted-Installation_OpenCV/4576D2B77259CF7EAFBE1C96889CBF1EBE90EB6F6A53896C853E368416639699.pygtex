@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	nano \PYGZti{}/.bashrc
+	\PYG{c+c1}{\PYGZsh{}Add to the end of the document the following path if it OpenCV is there}
+	\PYG{n+nb}{export} \PYG{n+nv}{PYTHONPATH}\PYG{o}{=}/usr/local/lib/python3.9/site\PYGZhy{}packages:\PYG{n+nv}{\PYGZdl{}PYTHONPATH}
+	\PYG{c+c1}{\PYGZsh{}Exit the nano text editor with Command + X, Y, enter}
+	\PYG{n+nb}{source} \PYGZti{}/.bashrc
+\end{Verbatim}

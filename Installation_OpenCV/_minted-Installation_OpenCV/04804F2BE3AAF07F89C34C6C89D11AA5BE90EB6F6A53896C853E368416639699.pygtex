@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{c+c1}{\PYGZsh{} set size to absolute value, leaving empty (default) then uses computed value}
+	\PYG{c+c1}{\PYGZsh{} you most likely don\PYGZsq{}t want this, unless you have an special disk situation}
+	\PYG{c+c1}{\PYGZsh{} CONF\PYGZus{}SWAPSIZE=100}
+	\PYG{n+nv}{CONF\PYGZus{}SWAPSIZE}\PYG{o}{=}\PYG{l+m}{2048}
+\end{Verbatim}

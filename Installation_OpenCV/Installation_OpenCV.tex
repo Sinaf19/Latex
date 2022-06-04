@@ -243,7 +243,7 @@
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=.3]{img/OpenCV.png}
+	\includegraphics[scale=.2]{img/OpenCV.png}
 	\label{OpenCV}
 \end{figure}
 
@@ -374,7 +374,7 @@ du Raspberry PI. Nous changeons la valeure des SWAPFILES. Cette valeure devra ê
 
 \begin{minted}[linenos, firstnumber=last]{bash}
 	# set size to absolute value, leaving empty (default) then uses computed value
-	#   you most likely don't want this, unless you have an special disk situation
+	# you most likely don't want this, unless you have an special disk situation
 	# CONF_SWAPSIZE=100
 	CONF_SWAPSIZE=2048
 \end{minted}
@@ -404,11 +404,26 @@ Nous pouvons vérifier que l'installation s'est bien déroulée en tapant les co
 	>>> cv2.__version__
 \end{minted}
 
-Si l'installation s'est bien déroulée l'output de la commande vous donnera la version installée. (4.5.x)
+Si l'installation s'est bien déroulée l'output de la commande vous donnera la version installée. (4.5.x). Cependant
+il peut arriver qu'une erreur du genre NoModuleFound apparaisse. Dans ce cas, il faut éditer la variable PYTHONPATH : 
+
+\begin{minted}[linenos, firstnumber=last]{bash}
+	nano ~/.bashrc
+	#Add to the end of the document the following path if OpenCV is there
+	export PYTHONPATH=/usr/local/lib/python3.9/site-packages:$PYTHONPATH
+	#Exit the nano text editor with Command + X, Y, enter
+	source ~/.bashrc
+\end{minted}
+
+Revérifier l'installation par la commande précédente.
 
 \chapter{Conclusion}
 
 Le téléchargement de logiciel par la source est compliquée et requiert beaucoup de temps. Chaque étape doit être
-suivie scrupuleusement pour être certain d'avoir un output propre et exécutable.
+suivie scrupuleusement suivie pour être certain d'avoir un output propre et exécutable. \par
+
+La rédaction de ce document a été faite après avoir réussi à installer OpenCV sans le documenter. 
+Réussir à le réinstaller nous a coûté beaucoup de temps, ~1 journée, ce qui aurait pu être 
+investi dans l'avancée de notre projet. 
 
 \end{document}
