@@ -42,6 +42,18 @@
 \usepackage{pst-all}								%Better handling of texts and images
 \usepackage{mathrsfs}
 \usepackage{colortbl}
+\usepackage{listings}
+\usepackage{minted}								%Better colorizing of source code WARNING need to be set up correctly according to the documentation http://tug.ctan.org/macros/latex/contrib/minted/minted.pdf
+\usepackage{ragged2e}
+\captionsetup{font=small}
+\usepackage{siunitx}
+\usepackage{wrapfig}
+\sisetup{
+    round-mode      = places, %Round numbers
+    round-precision = 2, % to 2 places
+}
+
+\usepackage{booktabs}
 
 
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
@@ -212,7 +224,7 @@
 		Rédacteur:\> Quentin Surdez\\ \\
 		Relecture:\> Rafael Dousse\\ \\
 		École:\> CPNV\\ \\
-		Date:\> Yverdon-Les-Bains, le 10 mars 2022\\%\today \\
+		Date:\> Yverdon-Les-Bains, le \today \\
 	\end{tabbing}
 \end{titlepage}
 %---------------------------------------------------------------------------
@@ -222,8 +234,8 @@
 %===========================================
 \tableofcontents
 
-%\listoffigures									% Table des figures
-%\listoftables									% Table des tableaux
+\listoffigures									% Table des figures
+\listoftables									% Table des tableaux
 \cleardoublepage
 %---------------------------------------------------------------------------
 
@@ -242,17 +254,17 @@ et de comment nous avons résolu les différents problèmes que nous avons renco
 %=============================================================================================
 % Document
 %=============================================================================================
-\chapter{HotSpot}
+\chapter{Serveur}
 
-Nous avons tout d'abord voulu faire de notre Raspberry PI un hotspot WIFI. Un hotspot est un endroit
-qui permet de se connecter, la plupart du temps à internet, via le WIFI. Le WIFI est un protocole de
-communication par ondes radio qui permet de relier ensemble plusieurs appareils électroniques. \par
+Nous avons recherché à faire de notre Raspberry PI un serveur permettant d'héberger une web application.
+Cela permettrait à notre application d'être facilement accessible tant que le Raspberry PI est connecté au même réseau
+WIFI que l'appareil qui servira de contrôle pour le robot. \par
 
 \section{Apache}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=.2]{img/Apache.png}
+	\includegraphics[scale=.1]{img/Apache.png}
 	\label{Apache}
 	\caption{Logo du serveur Web Apache}
 \end{figure}
@@ -270,29 +282,18 @@ que cet OS offrait, comme la création de noeud de communications. Cependant, no
 fait pour des robots industriels ou de qualité supérieure au notre. Après plusieurs tentatives, nous n'avons pas réussi à installer 
 l'OS sur notre Raspberry PI. Nous nous sommes éloignés de l'idée de paramétré notre Raspberry PI en hotspot. \par
 
-\chapter{Réseau}
-
-Nous nous sommes tournés vers une alternative. Le partage de connexion. En effet, plusieurs appareils connectés au même
-réseau peuvent communiquer entre eux via adresse IP et port. Les adresses IP sont assignés pour chaque appareil sur 
-le réseau. Les ports logiciels sont ceux utilisés principalement par les protocoles de communications standards comme TCP ou 
-HTTP. Nous pouvons assigné une web app à une adresse IP spécifique et un port spécifique. Ce qui nous permet d'y accéder via 
-un appareil connecté au même réseau que le Raspberry PI. \par
-
-Le nouveau challenge avec cette méthode était d'avoir une page web intéractive dont nous pouvions recevoir les informations
-et les transmettre à notre script en Pyhton. Donc de passer à du HTML, Javascript à du Python pour pouvoir envoyer via I2C 
-à noter Arduino. \par
-
+\newpage
 \section{Flask}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=.3]{img/Flask.png}
+	\includegraphics[scale=.2]{img/Flask.png}
 	\vspace{.5cm}
 	\label{Flask}
 	\captionabove{Logo du micro-framework Flask}
 \end{figure}
 
-Nous avons découvert via un tutoriel \href{https://pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/}{pyimagesearch.com}
+Nous avons découvert Flask via un tutoriel \href{https://pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/}{pyimagesearch.com}
 la possibilité d'utiliser le micro-framework Flask pour facilement intéragir avec une web application via notre script Python.
 Un framework est un logiciel facilitant l'intéraction avec un utilisateur, donc facilitant la création d'applications. 
 Flask est un micro-framework car il ne nécessite aucune librairies ou fichier additionnel pour fonctionner. Des extensions
@@ -303,12 +304,95 @@ Ainsi, Flask nous a permis de communiquer avec une page web et de communiquer l'
 Ce protocole est celui que nous avons choisi pour notre communication externe. Nous pouvons nous intéresser de plus 
 près sur la strucutre de notre web app. \par
 
-\chapter{Apprentissage HTML/CSS}
+\section{Tableau récapitulatif}
 
-\section{Site Web}
+\begin{table}[h!]
+    \begin{center}
+        \caption{Comparaison des différentes solutions échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+        \vspace{5mm}
+        \label{tab:table1}
+        \begin{tabular}{c|l|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Apache} & \textbf{ROS} & \textbf{Flask}\\
+            Installation & 10 & 1 & 10 \\
+            Facilité de prise en main & 5 & 1 & 8\\
+            Compatibilité & ? & ? & 10\\
+			\midrule
+			Total & 15 & \cellcolor{red}{2} & \cellcolor{green}{28}\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+\end{table}
 
-Le site web a été pensé pour être en premier lieu pratique. Nous avons d'abord un menu qui nous permet de choisir 
-quel mode nous souhaitons.
+Ci-dessus, les critères utilisés pour choisir ce avec quoi construire notre communication externe. 
+Le choix s'est fait après avoir réussi un à utiliser OpenCV et Flask facilement l'un avec l'autre. 
+La compatibilité avec OpenCV d'Apache et ROS n'a pas été testé. \par
+
+
+\chapter{Web Application}
+
+Nous avons pu nous lancer dans la conception de notre Web Application. Sa structure sera détaillée dans la section suivante. 
+Nous avons utilisé HTML/CSS pour pouvoir construire l'architecture du site hébergé sur le Raspberry PI. \par
+
+\section{Structure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.5]{img/Page_Accueil_texte.png}
+	\vspace{.5cm}
+	\label{Accueil}
+	\captionabove{Page d'accueil}
+\end{figure}
+
+La page d'accueil possède un menu nous permettant de naviguer dans notre site. Nous avons troix choix à notre diposition. 
+\begin{itemize}
+ \item Le premier "Controle manuel du robot" nous permet d'accéder à la page de contrôle à distance du robot. 
+ \item Le second "Différent mode" renvoit sur la page de choix pour les modes de notre robot. 
+ \item Le dernier "Vision Caméra" permet d'accéder à une page ayant un stream direct de la caméra du robot.
+\end{itemize}
+
+\newpage
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.5]{img/Controle_Robot.png}
+	\vspace{.5cm}
+	\label{Controle}
+	\captionabove{Page de contrôle du robot}
+\end{figure}
+
+La page de Contrôle du robot possède 4 boutons disposés en étoiles. Ces boutons permettent 
+d'envoyer des ordres au robot pour se diriger dans les quatre directions d'un plan. Une barre 
+latérale ou verticale selon si vous êtes sur un smartphone ou un ordinateur, permet de contrôler 
+la vitesse du robot. Nous ne savons si elle restera dans l'implémentation finale. Un bouton "Retour"
+permet de revenir à la page d'accueil. \par
+
+\newpage
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.4]{img/Choix_Mode_mini.png}
+	\vspace{.5cm}
+	\label{Choix}
+	\captionabove{Page de choix des modes}
+\end{figure}
+
+La page de choix de mode du robot possède 3 boutons. Ces boutons permettent d'envoyer des ordres pour excéuter les différents modes du robot.
+
+\begin{itemize}
+	\item Le premier "Avancer de 5m" fait avancer le robot de 5m tout droit. 
+	\item Le second "Tourner sur soi-même" fait faire un tour au robot sur lui-même.
+	\item Le dernier "Suivi de ligne" fait suivre une ligne au robot. 
+\end{itemize}
+
+\chapter{Conclusion}
+
+Nous avons pu tester plusieurs méthodes pour accéder à l'hébergement d'une web app sur un Raspberry PI. 
+L'outil nous permettant le plus de possibilité est Flask. \par
+Grâce à cet outil, nous avons pu facilement communiquer entre la page Web et notre Raspberry PI. 
+
+
 
 
 \end{document}
