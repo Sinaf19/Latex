@@ -229,8 +229,8 @@
 %===========================================
 \tableofcontents
 
-%\listoffigures									% Table des figures
-%\listoftables									% Table des tableaux
+\listoffigures									% Table des figures
+\listoftables									% Table des tableaux
 %\listoflistings % Now typeset the list
 \cleardoublepage
 %---------------------------------------------------------------------------
@@ -277,8 +277,9 @@ Nous pouvons observer que les deux outils se valent pour nous. La vraie différe
 de nouvelles compétences en apprenant \LaTeX. Nous continuons d'utiliser la suite Office365 pour faire 
 des graphiques avec Visio ou Excel pour des tableaux avec un nombre conséquent de données. \par
 
-Cependant, Word a été mis de côté au profit de Latex pour la documentation. Cela nous permet d'avoir
-un plus grand contrôle de notre document et une justification du texte. \par
+Cependant, Word a été mis de côté au profit de \LaTeX\ pour la documentation. Cela nous permet d'avoir
+un plus grand contrôle de notre document et une justification du texte. Qui plus est, Office365 
+est payant alors que \LaTeX\ est un projet Open-Source. \par
 
 
 
@@ -290,8 +291,16 @@ d'avoir de la place. Une strucure large, pour y intégrer les différents compos
 
 \section{Extension arbre moteur}
 
+
+
 La première pièce à avoir eu plusieurs itérations est l'extension de l'arbre moteur. Nous avions besoin d'un 
-arbre moteur plus grand que ceux déjà présent sur les moteurs. \par
+arbre moteur plus grand que ceux déjà présent sur les moteurs. L'arbre du moteur fait 15mm et nous souhaitons 
+que les roues ne rentrent pas en collision avec les autres éléments constituants le système de rotation. \par
+
+Ce système est composé du moteur, d'une roue compteuse qu'on peut apercevoir dans l'image qui suit, de l'extension
+de l'arbre moteur et enfin d'une roue. Pour être certain que les roues ne rentrent en collision nous avons choisi
+de faire un arbre moteur de 45mm de long. Cette longueur nous offre la possibilité d'avoir de larges roues tout en ayant 
+un port-à-faux réduit au minimum. \par
 
 \begin{figure}[!ht]
 	\centering
@@ -304,16 +313,17 @@ La première tentative a été celle qu'on peut voir ci-dessus. L'extension éta
 plus fin. Pour intégrer les roues cela n'était pas stable. Nous nous sommes alors dirigé vers une extension
 hexagonale. En effet, les roues possèdent d'un côté une chambre hexagonale permettant l'insertion de l'extension. \par
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
 	\centering 
 	\includegraphics[scale=.1]{img/ExtensionArbreMoteurHexa.jpg}
 	\label{ExtensionHexa}
 	\caption{Extension d'arbre moteur hexagonale}	
 \end{figure}
 
+\newpage
 L'extension hexagonale s'intègre correctement dans nos roues. Elle est facilement usinable avec la bonne pince. \par
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \begin{center}
         \vspace{5mm}
         \label{tab:table2}
@@ -321,7 +331,7 @@ L'extension hexagonale s'intègre correctement dans nos roues. Elle est facileme
             \toprule
             \textbf{ } & \textbf{Extension Ronde} & \textbf{Extension Hexagonale}\\
             \midrule
-            Usinage & 5 & 8\\
+            Temps d'usinage & 5 & 8\\
             Compatibilité & 5 & 10\\
             Maintien & 8 & 8 \\
 			\midrule
@@ -332,13 +342,36 @@ L'extension hexagonale s'intègre correctement dans nos roues. Elle est facileme
 	\caption{Comparaison des différentes extensions, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
 \end{table}
 
+
 Ce tableau nous permet de voir les avantages offerts par l'extension hexagonale. Cela est pourquoi nous avons 
 choisi de continuer avec des extension hexagonales. 
 
+\newpage
 \section{Roues compteuses}
 
 Nous avons faits plusieurs itérations pour les roues compteuses. Ces itérations sont intriquement liées au 
-changement dans le code du PID. 
+changement dans le code du PID. Nos roues compteuses ont toujours fait le même diamètre, 45mm, mais le nombre
+de trous les composant a changé avec le temps. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.1]{img/ExtensionArbreMoteur.jpg}
+	\label{RoueCompteuse}
+	\caption{Roue compteuse avec 16 trous}
+\end{figure}
+
+Nous voyons notre roue compteuse avec 16 trous. Nous avons une autre version avec 24 trous. La voici : 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.08]{img/RoueCompteuse.png}
+	\label{RoueCompteuse2}
+	\caption{Roue compteuse avec 24 trous}
+\end{figure}
+
+Nous avons choisi la variante avec 24 trous, car c'est celle qui fonctionne le mieux avec notre code du PID.
+Elle permet d'avoir, même lorsque le calcul du PID se fait à haute fréquence, d'avoir au moins une incrémentation
+entre deux calculs. \par
 
 \section{Plaque de Fondation}
 
@@ -356,8 +389,6 @@ Cela permet de protéger les composants d'un choc avec un obstacle. \par
 Ici, nous pouvons voir la première version de notre plaque fondation. Les moteurs étaient en dessous tout comme 
 les capteurs pour les roues compteuses. Cela ne garantit par leur intégrité lors du fonctionnement. \par
 
-\vspace{3cm}
-
 \begin{figure}[!ht]
 	\centering 
 	\includegraphics[scale=.4]{img/FoundationV2.0.png}
@@ -366,12 +397,13 @@ les capteurs pour les roues compteuses. Cela ne garantit par leur intégrité lo
 \end{figure}
 
 Ci-dessus, nous avons la deuxième version de la plaque "Foundation". Cette-fois ci les composants sont en-dessus
-et seules les roues ont une partie qui touche le sol en dessous de la plaque. 
+et seules les roues ont une partie qui touche le sol en dessous de la plaque.
 
-\begin{table}[!h]
+
+\begin{table}[!ht]
     \begin{center}
         \vspace{5mm}
-        \label{tab:table3}
+        \label{tab:table4}
         \begin{tabular}{c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
             \toprule
             \textbf{ } & \textbf{Plaque avec moteurs dessous} & \textbf{Plaque avec moteurs en dessus}\\
@@ -390,6 +422,36 @@ et seules les roues ont une partie qui touche le sol en dessous de la plaque.
 Nous pouvons voir que la deuxième version remplit mieux nos critères. Principalement par le fait que les éléments
 sont protégés des obstacles externes. La répartition du poids est aussi meilleure, tous les éléments lourds sont
 le plus bas possible. \par
+
+\section{Support Caméra}
+
+Le support pour la caméra possède plusieurs contraintes importantes. La caméra doit vibrer le moins possible
+pour avoir une qualité d'image suffisante pour pouvoir la traiter. Nous avons besoin d'une pièce robuste qui 
+pourra répondre aux différentes contraintes que le support possède. \par
+
+\begin{figure}[!h]
+	\centering 
+	\includegraphics[scale=.1]{img/SupportCameraPI.png}
+	\label{SupportCameraPI}
+	\caption{Support CameraPI}	
+\end{figure}
+
+Nous pouvons voir ici une première pièce. Cependant, elle est longue. Donc plus propice à bouger par les vibrations. 
+Le module pour fixer la caméra est ajouté sur l'échelle et cela peut créer des vibrations supplémentaires. \par
+
+Nous avons donc décidé de la faire plus courte et d'une seule pièce pour éliminer ces sources de transfert de vibrations. 
+Pour ce faire nous avons envoyé à l'imprimante 3D. \par
+
+\begin{figure}[!h]
+	\centering 
+	\includegraphics[scale=.4]{img/SupportCameraPIV2.png}
+	\label{SupportCameraPIV2}
+	\caption{Support CameraPI V2 3D}	
+\end{figure}
+
+Les contraintes ont changé le développement de la pièce pour qu'elle s'y adapte. Nous avons donc décidé de 
+la fusionner en une pièce et de l'imprimer en 3D. \par
+
 
 
 \chapter{Électronique}
