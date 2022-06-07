@@ -247,27 +247,164 @@ Ce document sera le rapport du projet P2213, Robot Autonome.
 
 \chapter{Administratif}
 
-1. Évolution de Word à \LaTeXe 
-2. Tableaux avantages désavantages de \LaTeXe et de Word
-3. Argumentations de nos choix
-4. Approche des problèmes et méthodologies utilisées
+Nous avons d'abord commencé à utiliser les outils de la suite Office365 pour faire notre administration. 
+En cours de route, nous avons fait le choix de changer et de passer à \LaTeX pour faire nos documents. 
+Vous trouverez ci-dessous un tableau comprenant nos critères pour ce choix. 
+
+\begin{table}[h!]
+    \begin{center}
+        \vspace{5mm}
+        \label{tab:table1}
+        \begin{tabular}{c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Office365} & \textbf{\LaTeX}\\
+            \midrule
+            Installation & 8 & 5\\
+            Facilité de prise en main & 8 & 3\\
+            Documentation & 8 & 8 \\
+            Produit créé & 5 & 8 \\
+			Création de nouvelles compétences & 3 & 9\\
+			\midrule
+			Total & 32 & 33\\
+            \bottomrule
+			
+        \end{tabular}
+    \end{center}    
+	\caption{Comparaison des différents outils administratifs, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+\end{table}
+
+Nous pouvons observer que les deux outils se valent pour nous. La vraie différence réside dans la création
+de nouvelles compétences en apprenant \LaTeX. Nous continuons d'utiliser la suite Office365 pour faire 
+des graphiques avec Visio ou Excel pour des tableaux avec un nombre conséquent de données. \par
+
+Cependant, Word a été mis de côté au profit de Latex pour la documentation. Cela nous permet d'avoir
+un plus grand contrôle de notre document et une justification du texte. \par
 
 
 
 \chapter{Mécanique}
 
-1. Exposition de notre Robot
-2. Argumentation de nos choix pour peu de méca == beaucoup d'Informatique
-3. Argumenter nos choix mécanique comme les moteurs et les pièces et capteurs etc\dots
-4. Approche des problèmes et méthodologies utilisées
+Notre robot a une forte partie mécanique. Nous avons du créer toutes les pièces pour construire un ensemble
+cohérent qui puisse rouler. Nous avons souhaité avoir une directive de base, créer des pièces nous permettant
+d'avoir de la place. Une strucure large, pour y intégrer les différents composants que nous souhaiterions intégré. \par
+
+\section{Extension arbre moteur}
+
+La première pièce à avoir eu plusieurs itérations est l'extension de l'arbre moteur. Nous avions besoin d'un 
+arbre moteur plus grand que ceux déjà présent sur les moteurs. \par
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.1]{img/ExtensionArbreMoteur.jpg}
+	\label{ExtensionRound}
+	\caption{Extension d'arbre moteur ronde}
+\end{figure}
+
+La première tentative a été celle qu'on peut voir ci-dessus. L'extension était ronde avec un embout 
+plus fin. Pour intégrer les roues cela n'était pas stable. Nous nous sommes alors dirigé vers une extension
+hexagonale. En effet, les roues possèdent d'un côté une chambre hexagonale permettant l'insertion de l'extension. \par
+
+\begin{figure}[!ht]
+	\centering 
+	\includegraphics[scale=.1]{img/ExtensionArbreMoteurHexa.jpg}
+	\label{ExtensionHexa}
+	\caption{Extension d'arbre moteur hexagonale}	
+\end{figure}
+
+L'extension hexagonale s'intègre correctement dans nos roues. Elle est facilement usinable avec la bonne pince. \par
+
+\begin{table}[!h]
+    \begin{center}
+        \vspace{5mm}
+        \label{tab:table2}
+        \begin{tabular}{c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Extension Ronde} & \textbf{Extension Hexagonale}\\
+            \midrule
+            Usinage & 5 & 8\\
+            Compatibilité & 5 & 10\\
+            Maintien & 8 & 8 \\
+			\midrule
+			Total & 18 & 26\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+	\caption{Comparaison des différentes extensions, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+\end{table}
+
+Ce tableau nous permet de voir les avantages offerts par l'extension hexagonale. Cela est pourquoi nous avons 
+choisi de continuer avec des extension hexagonales. 
+
+\section{Roues compteuses}
+
+Nous avons faits plusieurs itérations pour les roues compteuses. Ces itérations sont intriquement liées au 
+changement dans le code du PID. 
+
+\section{Plaque de Fondation}
+
+Notre plaque de support, appelée "Foundation", a subi plusieurs itérations. La première les moteurs étaient en dessous
+et le pont H et les batteries en dessus. Maintenant, les moteurs, les batteries et le pont H sont au-dessus. 
+Cela permet de protéger les composants d'un choc avec un obstacle. \par
+
+\begin{figure}[!ht]
+	\centering 
+	\includegraphics[scale=.5]{img/FoundationV0.png}
+	\label{FoundationV0}
+	\caption{Première itération "Foundation"}	
+\end{figure}
+
+Ici, nous pouvons voir la première version de notre plaque fondation. Les moteurs étaient en dessous tout comme 
+les capteurs pour les roues compteuses. Cela ne garantit par leur intégrité lors du fonctionnement. \par
+
+\vspace{3cm}
+
+\begin{figure}[!ht]
+	\centering 
+	\includegraphics[scale=.4]{img/FoundationV2.0.png}
+	\label{FoundationV2}
+	\caption{Deuxième itération "Foundation"}	
+\end{figure}
+
+Ci-dessus, nous avons la deuxième version de la plaque "Foundation". Cette-fois ci les composants sont en-dessus
+et seules les roues ont une partie qui touche le sol en dessous de la plaque. 
+
+\begin{table}[!h]
+    \begin{center}
+        \vspace{5mm}
+        \label{tab:table3}
+        \begin{tabular}{c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Plaque avec moteurs dessous} & \textbf{Plaque avec moteurs en dessus}\\
+            \midrule
+            Protection & 5 & 8\\
+            Maintien des composants & 5 & 10\\
+            Répartition du poids & 3 & 8 \\
+			\midrule
+			Total & 13 & 26\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+	\caption{Comparaison des différentes plaques de fondation, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+\end{table}
+
+Nous pouvons voir que la deuxième version remplit mieux nos critères. Principalement par le fait que les éléments
+sont protégés des obstacles externes. La répartition du poids est aussi meilleure, tous les éléments lourds sont
+le plus bas possible. \par
+
 
 \chapter{Électronique}
+
+
+
 
 1. Exposition de nos PCBs et schéma électrique ??? Est-ce qu'on doit en faire un ???
 2. Argumentation de nos choix de PCBs
 3. Approche des problèmes et méthodologies utilisées
 
 \chapter{Informatique}
+
+
+
 
 1. Masse de choses à dire mais être hyyyyyper clair et concis. 
 2. Schéma Schéma Schéma pour qui communique quoi par quel protocole et à qui 
