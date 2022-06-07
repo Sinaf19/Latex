@@ -43,7 +43,7 @@
 \usepackage{mathrsfs}
 \usepackage{colortbl}
 \usepackage{listings}
-%\usepackage{minted}								%Better colorizing of source code WARNING need to be set up correctly according to the documentation http://tug.ctan.org/macros/latex/contrib/minted/minted.pdf
+\usepackage{minted}								%Better colorizing of source code WARNING need to be set up correctly according to the documentation http://tug.ctan.org/macros/latex/contrib/minted/minted.pdf
 \usepackage{ragged2e}
 \captionsetup{font=small}
 
@@ -404,7 +404,7 @@ et seules les roues ont une partie qui touche le sol en dessous de la plaque.
     \begin{center}
         \vspace{5mm}
         \label{tab:table4}
-        \begin{tabular}{c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
             \toprule
             \textbf{ } & \textbf{Plaque avec moteurs dessous} & \textbf{Plaque avec moteurs en dessus}\\
             \midrule
@@ -456,31 +456,171 @@ la fusionner en une pièce et de l'imprimer en 3D. \par
 
 \chapter{Électronique}
 
-
-
-
 1. Exposition de nos PCBs et schéma électrique ??? Est-ce qu'on doit en faire un ???
 2. Argumentation de nos choix de PCBs
 3. Approche des problèmes et méthodologies utilisées
 
 \chapter{Informatique}
 
+Nous avons plusieurs programmes ayant des rôles majeurs. Nous avons tout d'abord le programme du 
+microcontrôleur qui calcule le PID à une fréquence de 250Hz. Ensuite, nous avons le programme qui gère
+la WebApp depuis le Raspberry. Ce programme en appele plusieurs autres qui gèrent les fonctions en lien 
+avec la CameraPI. \par
+
+La CameraPI communique par bus CSI avec le Raspberyy PI et le Raspberry PI communique avec le microcontrôleur
+par bus I2C. Nous allons commencer par expliquer les choix faits dans le programme du PID, ensuite nous discuterons
+des programmes qui gèrent la CameraPI pour finir sur le code de la WebApp. \par
+
+
+\section{PID}
+
+Nous avons besoin d'asservir nos moteurs avec un asservissement par PID. Nous souhaitons que le robot avance
+tout droit lorsqu'on le lui en donne l'ordre. L'équation du PID en fonction du temps et de l'erreur calculée 
+est la suivante : 
+
+\begin{figure}[h]
+	\[u=k_pe + k_i \int e \cdot dt + k_d \cfrac{de}{dt}\] 
+	\caption{Équation du PID}
+	\label{eq1}
+\end{figure}
+
+Nous avons utilisé cette équation pour mettre en place un calcul du PID dans notre système. Le $dt$ a été 
+set up via des interruptions attachées. Une clock externe permet d'envoyer un signal à une fréquence de 250Hz
+pour calculer le PID. \par
+
+Nous avons deux possibilités pour déterminer les différents facteurs. Nous pouvons soit utiliser la méthode 
+de Ziegler-Nichols ou alors la méthode empirique. Voici un tableau pour les départager : 
+
+\begin{table}[!ht]
+    \begin{center}
+        \vspace{5mm}
+        \label{tab:table5}
+        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Ziegler-Nichols} & \textbf{Empirique}\\
+            \midrule
+            Justesse des facteurs & 8 & 5\\
+            Facilité d'application & 3 & 8\\
+            \midrule
+			Total & 11 & 13\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+	\caption{Comparaison des différentes méthodes d'acquisition des facteurs PID, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+\end{table}
+
+Les méthodes se valent entre elles. Cependant, la méthode via Ziegler-Nichols n'a pas été tout à fait comprite pour l'appliquer 
+dans notre cas avec des moteurs DC. C'est pour cela que nous avons choisi de continuer avec la méthode empirique. \par
+
+
+Vous trouverez de plus amples informations concernant le code et notre utilisation des interruptions
+à ce fichier : \href{run:./Code_Arduino.pdf}{Explication code Arduino}
 
 
 
-1. Masse de choses à dire mais être hyyyyyper clair et concis. 
-2. Schéma Schéma Schéma pour qui communique quoi par quel protocole et à qui 
-3. Argumentation des choix effectués pour la méthodo utilisée pour PID
-4. Comprendre notre approche de la comm avec le Raspberry PI
+\section{CameraPI}
+
+Pour utiliser la CameraPI nous avons dû commencer à apprendre à utiliser OpenCV. 
+Open Source Computer Vision Library, est un logiciel open source de computer vision et de machine learning. 
+Pour pouvoir l'installer sur un Raspberry PI, se référer à ce document : \href{run:./Installation_OpenCV.pdf}{Guide d'installation à OpenCV}\par
+
+La découverte de ce logiciel s'est faite en plusieurs étapes : 
+
+\begin{itemize}
+	\item Son téléchargement, qui est plutôt difficile, si nous le téléchargeons depuis la source
+	\item La première prise en main grâce à des tutoriels
+	\item Création de projet correspondant à notre cahier des charges avec l'aide de tutoriels
+	\item La prise en main des fonctions utilisées dans les projets pour les intégrer à notre code
+\end{itemize}
+
+La plupart des tutoriels ont été trouvé sur le site suivant : \href{https://pyimagesearch.com/}{pyimagesearch.com} \par
+
+Le choix d'utiliser OpenCV s'est fait pour plusieurs raisons, dont plusieurs sont détaillées ici : \href{run:./Choix_Camera.pdf}{Choix de la caméra}. 
+Cependant, voici une liste exhaustive de ce qui nous a fait choisir ce logiciel :
+
+\begin{itemize}
+	\item Il permet de remplir notre cahier des charges, avec même quelques ajouts de fonctionnalités
+	\item Il est difficile d'approche, mais permet de développer une compétence intéressante
+	\item Il nous permettra de faire du machine learning dans notre avenir
+\end{itemize}
+
+On peut voir que les raisons sont surtout personnelles. Un projet futur personnel serait d'utiliser Keras et TensorFlow
+pour pouvoir apprendre le machine learning. \par
+
+\section{WebApp}
+
+La création de la WebApp s'est faite grâce au micro-framwork Flask. Nous avons construit le WebApp grâce aux langages 
+HTML/CSS. Comme pour les autres inconnues de ce projet nous avons d'abord commencé à regarder des vidéos pour ensuite
+s'approprier le langage et le comprendre. \par
+
+Les raisons qui nous ont amenées à choisir Flask sont les suivantes : 
+
+\begin{itemize}
+	\item Son installation est simple et rapide 
+	\item Il permet un transfert d'informations facilité entre la WebApp et le script python
+	\item Il est compatible avec nos autres librairies, notamment OpenCV
+	\item Il est un micro-framework et donc très léger
+\end{itemize}
+
+Il y a une hiérarchie importante lors de la communication pour établir la WebApp. Le script python appelle Flask et certaines 
+de ses fonctions pour créer les pages Web. Il est donné un template HTML et ce dernier va chercher dans un dossier static 
+notre code CSS. Ensuite, les infos de la WebApp sont renvoyés au script qui recommence une boucle. 
+Voici un schéma pour représenter cette communication : 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.8]{img/Schema_WebApp.png}
+	\label{WebApp}
+	\caption{Schéma de la WebApp}
+\end{figure}
+
+La WebApp permet ainsi une communication à distance via un autre appareil connecté au même réseau que le serveur, soit 
+le Raspberry PI. Pour plus d'informations à propos de la communication externe : \href{run:./Comm_Externe}{Communication externe} \par
+
+\section{Communication}
+
+La communication est un point important de notre projet. En effet, c'est grâce à la communication I2C que notre Raspberry PI peut 
+échanger des informations avec l'Arduino Nano Every. C'est aussi une communication via WIFI qui nous permet de contrôler le robot 
+à distance. \par
+
+Chaque communication possède un document qui lui est lié voici les liens : \href{run:./Comm_Externe}{Communication externe} \&
+\href{run:./Comm_interne}{Communication interne} \par
+
+Nous allons donné les points clefs pour chaque communication et les raisons du choix de ces modes de communication. \par
+
+Le bus de communication I2C permet une communication rapide entre un maître, Raspberry PI, et un ou plusieurs esclaves, les Arduinos. 
+Ce bus de communication est rapide, soit ~100kbits/s, cela permet d'avoir une transmission quasi instantanée de l'information.
+Les librairies d'un côté comme de l'autre sont simple à utiliser et se mette rapidement en place. 
+
+\newpage
+\begin{itemize}
+	\item Flexibilité pour ajouter des esclaves potentiels
+	\item Rapide
+	\item Facile à installer
+\end{itemize}
+
+Le protocole de communication WIFI est un protocole commun à presque tous les appareils connectés. Il est facile de se connecter 
+à un WIFI avec nos téléphones ou nos ordinateurs. Ce protocole est sélectif. Il est construit de tel sorte que par défaut un 
+password est requis pour avoir une connexion à un réseau commun. Cela permet d'éviter les interférences d'autres appareils. 
+
+\begin{itemize}
+	\item Protocole sécurisé par défaut 
+	\item Facile à mettre en place
+	\item Facile à utiliser
+\end{itemize}
 
 \chapter{Améliorations}
 
-1. Câblage et connectique du robot
-2. Optimisation du code caméra pour gérer mieux le webstreaming ?
-3. Opti du code de régulation du robot
-4. Meilleure mécanique
+
+
+1. Câblage et connectique du robot\\
+2. Optimisation du code caméra pour gérer mieux le webstreaming ?\\
+3. Opti du code de régulation du robot\\
+4. Meilleure mécanique\\
 
 \chapter{Conclusion}
+
+
 
 
 
