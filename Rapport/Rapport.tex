@@ -242,7 +242,20 @@
 \setcounter{page}{1}
 
 \chapter{Introduction}
-Ce document sera le rapport du projet P2213, Robot Autonome.
+
+Notre projet P2213, Robot Autonome, est la construction d'un robot qui puisse remplir plusieurs tâches
+sans avoir d'intéractions avec l'homme. La tâche principale est le suivi de ligne. Nous avons d'autres 
+tâches comme la reconnaissance de code QR pour effectuer certains programmes ou le contrôle à distance. \par
+
+Ce document détaillera les choix effectués dans les catégories suivantes : 
+
+\begin{itemize}
+	\item Administratif
+	\item Mécanique
+	\item Électronique
+	\item Informatique
+\end{itemize}
+
 
 
 \chapter{Administratif}
@@ -281,8 +294,6 @@ Cependant, Word a été mis de côté au profit de \LaTeX\ pour la documentation
 un plus grand contrôle de notre document et une justification du texte. Qui plus est, Office365 
 est payant alors que \LaTeX\ est un projet Open-Source. \par
 
-
-
 \chapter{Mécanique}
 
 Notre robot a une forte partie mécanique. Nous avons du créer toutes les pièces pour construire un ensemble
@@ -290,8 +301,6 @@ cohérent qui puisse rouler. Nous avons souhaité avoir une directive de base, c
 d'avoir de la place. Une strucure large, pour y intégrer les différents composants que nous souhaiterions intégré. \par
 
 \section{Extension arbre moteur}
-
-
 
 La première pièce à avoir eu plusieurs itérations est l'extension de l'arbre moteur. Nous avions besoin d'un 
 arbre moteur plus grand que ceux déjà présent sur les moteurs. L'arbre du moteur fait 15mm et nous souhaitons 
@@ -399,7 +408,6 @@ les capteurs pour les roues compteuses. Cela ne garantit par leur intégrité lo
 Ci-dessus, nous avons la deuxième version de la plaque "Foundation". Cette-fois ci les composants sont en-dessus
 et seules les roues ont une partie qui touche le sol en dessous de la plaque.
 
-
 \begin{table}[!ht]
     \begin{center}
         \vspace{5mm}
@@ -419,17 +427,55 @@ et seules les roues ont une partie qui touche le sol en dessous de la plaque.
 	\caption{Comparaison des différentes plaques de fondation, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
 \end{table}
 
+
 Nous pouvons voir que la deuxième version remplit mieux nos critères. Principalement par le fait que les éléments
 sont protégés des obstacles externes. La répartition du poids est aussi meilleure, tous les éléments lourds sont
 le plus bas possible. \par
 
+\section{Support moteur}
+
+Les moteurs DC que nous avons choisi, soit les MODELCRAFT, étaient assemblés avec une pièce en aluminium permettant de
+les soutenir sur une plaque. Cette pièce était déjà prête et ne nécessitait pas d'être refaite. \par
+
+Nous avons, au cours de notre projet, fait une pièce y ressemblant mais en PMMA. Cela nous a permis de revoir quelques
+points qui ne nous satifaisaient pas sur la pièce en aluminium déjà faite. \par
+
+\begin{table}[!ht]
+    \begin{center}
+        \vspace{5mm}
+        \label{tab:table6}
+        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Pièce refaite en PMMA} & \textbf{Pièce en aluminium}\\
+            \midrule
+            Compatibilité & 10 & 5\\
+            Solidité & 7 & 10\\
+            Usinage & 5 & 3\\
+			\midrule
+			Total & 22 & 18\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+	\caption{Comparaison des différents support de moteurs, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+\end{table}
+
+Nous pouvons voir que le principal atout de la pièce en PMMA est sa compatibilité avec notre système. En effet, nous l'avons 
+créé pour que sa structure soit celle dont nous avons besoin pour notre projet. Ainsi, ses trous pour la visser sur les plaques
+sont alignés avec les trous des plaques et sa hauteur correspond à la hauteur que nous souhaitons pour l'espacement entre les 
+plaques. Son usinage prend du temps, comme les trous doivent être alignés. \par
+
+La pièce en aluminium est surtout plus robuste que la pièce en plastique. Son usinage prend plus de temps et de compétence 
+comme une CNC doit être utilisée. Notre système n'a pas pour but d'être robuste aux chocs et nous ne voyons donc pas l'intérêt
+d'utiliser cette pièce. \par
+
+\newpage
 \section{Support Caméra}
 
 Le support pour la caméra possède plusieurs contraintes importantes. La caméra doit vibrer le moins possible
 pour avoir une qualité d'image suffisante pour pouvoir la traiter. Nous avons besoin d'une pièce robuste qui 
 pourra répondre aux différentes contraintes que le support possède. \par
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
 	\centering 
 	\includegraphics[scale=.1]{img/SupportCameraPI.png}
 	\label{SupportCameraPI}
@@ -446,15 +492,17 @@ Pour ce faire nous avons envoyé à l'imprimante 3D. \par
 	\centering 
 	\includegraphics[scale=.4]{img/SupportCameraPIV2.png}
 	\label{SupportCameraPIV2}
-	\caption{Support CameraPI V2 3D}	
+	\caption{Pilier CameraPI 3D}	
 \end{figure}
 
 Les contraintes ont changé le développement de la pièce pour qu'elle s'y adapte. Nous avons donc décidé de 
 la fusionner en une pièce et de l'imprimer en 3D. \par
 
-
-
 \chapter{Électronique}
+
+
+
+
 
 1. Exposition de nos PCBs et schéma électrique ??? Est-ce qu'on doit en faire un ???
 2. Argumentation de nos choix de PCBs
@@ -611,17 +659,74 @@ password est requis pour avoir une connexion à un réseau commun. Cela permet d
 
 \chapter{Améliorations}
 
+Les améliorations de notre projet sont réparties avec la même structure que le rapport lui-même. 
+Ce sont des observations que nous avons faites au cours du développement. Ce sont certaines 
+choses que nous aurions aimé faire, mais soit le temps nous a contraint, ou nos décisions 
+ne nous permettaient pas de les faire. Certaines améliorations sont aussi au-delà de nos 
+compétences actuelles et nous demanderaient beaucoup trop de temps. \par
+
+\section{Mécanique}
+
+La mécanique est le point dans lequel nous avons investi le moins de temps dans le projet. 
+En effet, nous souhaitions nous diriger principalement sur l'aspect électronique et programmation
+de notre projet. Ainsi, il existe des améliorations au niveau de la mécanique de notre projet. \par
+
+Premièrement, notre robot n'est pas fermé. Le fait que sa connectique et ses moteurs ne soit 
+pas protégé par une boîte ou des parois fait en sorte que les risques de dégâts restent 
+relativement grand. \par
+
+Nous avons aussi des pièces soutentant les moteurs dont la hauteur ne correspond pas à nos besoins. 
+En effet, après l'ajout de nouvelles roues, nous avons dû réhausser le deuxième étage. Cela fragilise 
+la structure de notre robot. \par
+
+Le maintien des batteries n'est pas bon. Une cage d'entretoises les maintiennent dans un certain espace
+et les empêche de trop bouger. Cependant, elles sont libres dans cette cage d'entretoises, donc bougent. 
+Ensuite, l'accès aux batteries est simplement mauvais. Il faut soit avoir une grande dextérité pour 
+extraire les batteries, ou dévisser les plaques du haut pour y accéder. \par
+
+Un vérin électrique pour faire bouger l'avant ou l'arrière du robot aurait aussi été grandement 
+apprécié \par
+
+\section{Électronique}
+
+Notre électronique souffre d'un manque d'organisation dans les connectiques inter-PCBs.
+Notre connectique reste mal organisé et brouillon dans la structure du robot. \par
+
+Nous aurions souhaité avoir un pilone de câble déservant les alimentations aux 
+différents étages du robot. Une autre amélioration électronique serait d'organiser les 
+connections inter-PCBs avec des connectiques dédiés et des câbles plats. Cela permettrait 
+de s'assurer que les différents chocs que le robot subit ne défasse pas la connexion 
+par les câbles. Cela permettrait aussi à l'ensemble d'être organisé et propre. \par
+
+Notre PCB gérant la communication en I2C possède une particularité dont nous ne connaissons pas 
+la cause. Au niveau de l'adaptateur de niveau logique, le GND du Raspberry PI ne doit pas être branché 
+pour que le tout fonctionne correctement. Le problème n'est pas connu, il faudra donc s'y attarder
+si le PCB est réutilisé. \par
 
 
-1. Câblage et connectique du robot\\
-2. Optimisation du code caméra pour gérer mieux le webstreaming ?\\
-3. Opti du code de régulation du robot\\
-4. Meilleure mécanique\\
+\section{Informatique}
+
+Notre installation d'OpenCV est lourde et lente, soit ~4Go et 2-4 heures d'installation
+avec une optimisation de la valeur des SWAPFILES. Une amélioration potentielle serait de trouver
+une installation moins gourmande en temps et aussi plus légère. Pour ce faire, il faudrait savoir
+exactement les modules dont nous avons besoin pour nos différents programmes. \par
+
+Une deuxième améiorations concernant notre code serait une optimisation de la régulation. 
+En effet, nos différents facteurs PID peuvent être mieux déterminés par une méthode autre 
+que celle empirique. Il serait nécessaire de faire des tests plus poussé pour avoir 
+des graphiques représentant l'évolution de la vitesse et de la valeur de contrôle. Les facteurs
+pourraient être alternés en fonction. La fréquence à laquelle le calcul est fait devrait aussi 
+faire l'objet d'une étude poussée pour déterminer la meilleure avec nos restrictions. \par
 
 \chapter{Conclusion}
 
+Les différentes décisions prises ont été dans le but de remplir notre cahier des charges. 
+Nous avons cherché à trouver des solutions pour pouvoir accomplir les différents objectifs que 
+nous nous étions fixés en début de projet. \par
 
-
+Il y a certaines décisions qui auraient pu être mises en place dès le début pour que nous ayons une
+direction à suivre qui soit plus organisé, comme un tube central autour duquel les alimentations 
+peuvent donner du courant. \par
 
 
 \end{document}
