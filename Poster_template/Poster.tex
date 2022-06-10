@@ -13,21 +13,21 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[12 pt, portrait]{article}
-\usepackage{textpos}
+\documentclass[a0, portrait]{a0paper}
+
 % control margins here
 \usepackage{geometry}
  \geometry{
- a3paper,
- left=5mm,
- top=4.5mm,
- right=5mm,
- bottom=4.5mm
+ a0paper,
+ left=5cm,
+ top=4.5cm,
+ right=5cm,
+ bottom=4.5cm
  }
-\addtolength{\textwidth}{4.5mm} % width of text can be adjusted if margins above are adjusted
+\addtolength{\textwidth}{4.5cm} % width of text can be adjusted if margins above are adjusted
 
 \usepackage{multicol} % This is so we can have multiple columns of text side-by-side
-\columnsep=2em % This is the amount of white space between the columns in the poster
+\columnsep=3em % This is the amount of white space between the columns in the poster
 \columnseprule=0pt % This is the thickness of the black line between the columns in the poster
 
 % UZH colours
@@ -42,7 +42,7 @@
 
 \usepackage{ifthen} % needed to stop horizontal line above 'Conclusions' section
 \usepackage{graphicx} % Required for including images
-\graphicspath{{img/}} % Location of the graphics files
+\graphicspath{{figures/}} % Location of the graphics files
 \usepackage{mwe,tikz}\usepackage[percent]{overpic} % overlay your photo over the background
 \usepackage{booktabs} % Top and bottom rules for table
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
@@ -79,9 +79,9 @@
 
 % define how our section titles will look (with ruled line)
 \titleformat{\section}
-  {\sectionrule\Large\bfseries}
+  {\needspace{1\baselineskip}\sectionrule\huge\bfseries}
   {\color{uzhblau100}\thesection.}
-  {5pt}
+  {1em}
   {\color{uzhblau100}}
 
 % draw horizontal line before section unless it is conclusions (if you change name of Conclusions, you should
@@ -103,55 +103,53 @@
 %	POSTER HEADER 
 %----------------------------------------------------------------------------------------
 %\title{Creating a \LaTeX{} poster template matching UZH specifications for LiRI presentations}
-\title{Robot Autonome}
+\title{Titel zum Thema des Posters: Lesbar aus fünf Metern Distanz  und eindeutig formuliert}
 
 % the top logo (in english!) and unit title
 \noindent
 \begin{minipage}{.32\linewidth}
- \includegraphics[width=10cm]{logoCPNV.png}
+ \includegraphics[width=20cm]{uzh_logo_e_pos.pdf}
 \end{minipage}%
-\begin{textblock}{0}(17, -2)
-
- \includegraphics[width=5cm]{LogoMCT.jpg}
-
-\end{textblock}
+\begin{minipage}{.33\linewidth}
+ \huge{\textbf{Linguistic Research Infrastructure}}
+\end{minipage}
 \vspace{4em}
 
 % The header is divided into two boxes, on the left is the text and on the right is the image
 \begin{minipage}[b][][t]{.6\linewidth}
 \vfill
 \makeatletter
-\raggedright{\fontsize{75pt}{100pt}\selectfont\color{uzhblau100}\textbf{{\@title}}\par}
+\raggedright{\fontsize{92pt}{100pt}\selectfont\color{uzhblau100}\textbf{{\@title}}\par}
 \makeatother
 \color{Black}
 \vspace{1cm}
 %\Huge\textit{Subtitle goes here}\\[2.4cm] % Subtitle if it exists
-Quentin Surdez, Rafael Dousse\\
+\underline{Danny McDonald\textsuperscript{1}}, Autor Zwei, Autor Drei\\
 \vspace{0.2cm}
-
+\textsuperscript{1}LiRI, University of Zurich
 %\\ % add your institution
 %\texttt{you@uzh.ch}%\\ % add your email
 \end{minipage}%
 %
 \begin{minipage}[b][][t]{0.39\linewidth}
-%\vfill
-  %\begin{overpic}[width=.8\textwidth,right]{logoCPNV.png} % what even is this thing?
-     {\includegraphics[scale=.4]{FoundationV2.0.png}}  % your image goes in here
-  
+\vfill
+  \begin{overpic}[width=.8\textwidth,right]{LIRI_WissPoster_Wasserzeichen.png} % what even is this thing?
+     \put(85,0){\includegraphics[scale=0.25]{Silhouette.png}}  % your image goes in here
+  \end{overpic}
 \end{minipage}
-\vspace{2mm}
+\vspace{1cm}
 
 %----------------------------------------------------------------------------------------
 %	POSTER BODY
 %----------------------------------------------------------------------------------------
 
-\begin{multicols}{2} % This is how many columns your poster will be broken into
+\begin{multicols}{3} % This is how many columns your poster will be broken into
 
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
 
-\section{Contextualisation}
+\section{Untertitel}
 
 \large
 Fliesstext mit einfachem Satzbau und kurzen Hauptsätzen erleichtern die Lesbarkeit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis. Donec quam felis, ultricies nec, pellentesque eu. Aenean commodo ligula eget dolor. Aenean massa.
@@ -188,7 +186,7 @@ Fliesstext mit einfachem Satzbau und kurzen Hauptsätzen erleichtern die Lesbark
 \blindtext
 
 \begin{center}\vspace{1cm}
-    \includegraphics[width=0.8\linewidth]{logoCPNV.png}
+    \includegraphics[width=0.8\linewidth]{Figure_1}
     \captionof{figure}{Regional map with some colours}
 \end{center}\vspace{1cm}
 
