@@ -1,0 +1,20 @@
+\documentclass{article}
+ 
+\usepackage{pgfplots}
+
+ 
+\pgfplotsset{compat = newest}
+ 
+\begin{document}
+
+
+\vspace{5cm}
+
+
+    \begin{tikzpicture}
+        \begin{axis}[]
+            \addplot[] {exp(-x/10)*( cos(deg(x)) + sin(deg(x))/10 )};
+        \end{axis}
+    \end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    /*<link rel="stylesheet" href="{{url_for('static',filename='Astyles.css')}}">*/
+
+    <title> Vision du robot</title>
+    <img src="{{ url_for('video_feed') }}">
+
+</head>
+
+<body>
+
+    <style>
+        /* il faut adapter les différents code header/footer et boutons aux différentes tailles
+    puis dès que tous sera bon faire un dernier css*/
+
+        /*Taille iphone*/
+
+        /*-----------------------------------------------------------*/
+        /* ce ci est ce que j'ai fait qui devrait fonctionner pour chaque page et plus besoin de changer après*/
+
+        .header {
+            /* background-color: #73ec1146;*/
+            background-color: #0ea94c8d;
+            width: 100%;
+            text-align: end;
+            padding: 4px;
+            font: arial;
+            font-size: 12px;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+
+        .header img {
+            width: 25%;
+            /*height: 7%;*/
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+
+        .footer {
+            /*background-color: #73ec1146;*/
+            background-color: #0ea94c8d;
+            width: 100%;
+            height: 10%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+        }
+
+        #bouton-retour {
+            position: absolute;
+            bottom: 15%;
+            right: 0%;
+
+            width: 50%;
+        }
+
+        .header h1 {
+            margin-right: 55px;
+
+        }
+
+
+        /*-----------------------------------------------------------*/
+
+
+
+
+
+
+
+
+        /*Taille ipad*/
+
+
+
+        /*Taille ordi*/
+        @media screen and (min-width: 1000px) {
+
+
+
+            .btn-group button {
+                background-color: rgb(248, 168, 48);
+                border: 1px solid blue;
+                color: white;
+                padding: 20px 24px;
+                cursor: pointer;
+                width: 50%;
+                display: block;
+                position: relative;
+                top: 75%;
+                left: 25%;
+            }
+
+            .btn-group button:not(:last-child) {
+                /*empêche les doubles bords*/
+                border-bottom: none;
+            }
+
+            .btn-group button:hover {
+                background-color: gold;
+            }
+
+            #bouton-retour {
+                position: fixed;
+                bottom: 100px;
+                right: 10px;
+                padding: 10px 24px;
+                width: 25%;
+            }
+
+
+            .button {
+                background-color: #ec3611;
+                border-radius: 30px;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+
+                cursor: pointer;
+
+
+                transition-duration: 0.1s;
+
+            }
+
+            .button1 {
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            .header h1 {
+                margin-right: auto;
+
+            }
+
+
+
+            /*-----------------------------------------------------------------------------------------*/
+
+            body {
+
+                background-image: url("{{url_for('static',filename='ImmageRobot.png')}}");
+                background-size: cover;
+            }
+
+            .header {
+                /* background-color: #73ec1146;*/
+                background-color: #0ea94c8d;
+                width: 100%;
+                text-align: center;
+                padding: 4px;
+                font: arial;
+                font-size: 12px;
+                position: fixed;
+                left: 0;
+            }
+
+            .header img {
+                width: auto;
+                /*height: 7%;*/
+                position: absolute;
+                top: 10px;
+                left: auto;
+                right: 20px;
+            }
+
+
+            .footer {
+                /*background-color: #73ec1146;*/
+                background-color: #0ea94c8d;
+                width: 100%;
+                height: auto;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+            }
+
+            .nomProjet {
+                float: left;
+                padding-left: 10px;
+
+
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: large;
+            }
+
+            .auteur {
+                float: right;
+                padding-right: 10px;
+
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: large;
+            }
+
+
+            /*-----------------------------------------------------------------------------------------*/
+
+        }
+    </style>
+
+     
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+  crossorigin="anonymous"></script>
+<script type=text/javascript>
+
+
+
+function boutons(myId, pyFunction) {
+
+  $(function() {
+    $(myId).on('mousedown', function(event) {
+      event.preventDefault()
+      $.getJSON(pyFunction,
+        function(data){
+          console.log(data)
+        });
+        
+    });
+    
+  });    
+}
+
+
+boutons('a#retour','/retour');
+
+</script>
+
+
+    <div class="header">
+        <h1> Vision caméra </h1>
+        <img class="img_CPNV" src="{{url_for('static',filename='autreLogoCpnv.png')}}" alt="LogoCPNV">
+    </div>
+
+    <div class="footer">
+
+        <p class="nomProjet"> P2213 robot autonome</p>
+        <p class="auteur">Rafael Dousse et Quentin Surdez </p>
+        <div style="clear: both;"> </div>
+
+    </div>
+
+    <div class="btn-group" id="bouton-retour">
+        <form  action="/">
+        <a href='#' id='retour'> <button class="button button1"  > Retour </button>  </a> 
+        </form>
+      </div>
+
+
+
+</body>
+
+
+</html>
