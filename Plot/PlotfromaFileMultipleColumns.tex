@@ -1,0 +1,43 @@
+\documentclass{article}
+ 
+\usepackage{pgfplots}
+ 
+\pgfplotsset{compat = newest}
+ 
+\begin{document}
+ 
+\pgfplotstableread{multiplecolumnsdata.dat}{\table}
+ 
+\begin{tikzpicture}
+\begin{axis}[
+    xmin = 0, xmax = 10,
+    ymin = 0, ymax = 1,
+    xtick distance = 1,
+    ytick distance = 0.25,
+    grid = both,
+    minor tick num = 1,
+    major grid style = {lightgray},
+    minor grid style = {lightgray!25},
+    width = \textwidth,
+    height = 0.75\textwidth,
+    legend cell align = {left},
+    legend pos = north west
+]
+ 
+\addplot[blue, mark = *] table [x = {x}, y = {y1}] {\table};
+ 
+\addplot[red, only marks] table [x ={x}, y = {y2}] {\table};
+ 
+\addplot[teal, only marks, mark = x, mark size = 3pt] table [x = {x}, y = {y3}] {\table};
+ 
+\legend{
+    Plot with marks and line, 
+    Plot only with marks,
+    Plot with other type of marks
+}
+ 
+\end{axis}
+ 
+\end{tikzpicture}
+ 
+\end{document}

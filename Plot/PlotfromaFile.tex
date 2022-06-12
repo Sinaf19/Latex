@@ -6,8 +6,6 @@
  
 \begin{document}
  
-\vspace{5cm}
-
 \begin{tikzpicture}
  
 \begin{axis}[
@@ -20,15 +18,27 @@
     major grid style = {lightgray},
     minor grid style = {lightgray!25},
     width = \textwidth,
-    height = 0.5\textwidth
-    ]
-    \addplot[
-        domain = 0:30,
-        samples = 200,
-        smooth, 
-        thick,
-        blue
-    ] {exp(-x/10)*( cos(deg(x)) + sin(deg(x))/10 )};
+    height = 0.5\textwidth,
+    xlabel = {$x$},
+    ylabel = {$y$},]
+ 
+% Plot a function
+\addplot[
+    domain = 0:30,
+    samples = 200,
+    smooth,
+    thick,
+    blue,
+] {exp(-x/10)*( cos(deg(x)) + sin(deg(x))/10 )};
+ 
+% Plot data from a file
+\addplot[
+    smooth,
+    thin,
+    red,
+    dashed
+] file[skip first] {data.dat};
+ 
 \end{axis}
  
 \end{tikzpicture}

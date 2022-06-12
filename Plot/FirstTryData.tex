@@ -1,0 +1,48 @@
+\documentclass{article}
+ 
+\usepackage{pgfplots}
+ 
+\pgfplotsset{compat = newest}
+ 
+\begin{document}
+ 
+\pgfplotstableread{DataTry.dat}{\table}
+ 
+\begin{tikzpicture}
+\begin{axis}[
+    xmin = 0, xmax = 8000,
+    ymin = 0, ymax = 110,
+%    xtick distance = 1,
+  %  ytick distance = 0.25,
+    %grid = both,
+   % minor tick num = 1,
+   % major grid style = {lightgray},
+   % minor grid style = {lightgray!25},
+    width = \textwidth,
+    %height = 0.75\textwidth,
+    %legend cell align = {left},
+    %legend pos = north west
+    legend style={cells={anchor=east},
+    legend pos = outer north east}
+]
+ 
+\addplot[blue, smooth] table [x = {x}, y = {y1}] {\table};
+ 
+\addplot[red, smooth] table [x ={x}, y = {y2}] {\table};
+ 
+\addplot[brown, smooth] table [x = {x}, y = {y3}] {\table};
+
+\addplot[yellow, smooth] table [x = {x}, y = {y4}] {\table};
+
+\legend{
+    PWM Motor A,
+    Tick A,
+    PWM Motor B,
+    Tick B,
+}
+
+\end{axis}
+ 
+\end{tikzpicture}
+ 
+\end{document}
