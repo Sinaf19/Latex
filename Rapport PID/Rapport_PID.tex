@@ -919,7 +919,7 @@ presque nulle. \par
     \end{itemize}
     \end{center}
 
-    Le robot a d'abord tourné à gauche puis à droite 
+    Le robot a d'abord tourné à gauche, ensuite tout droit, puis à droite 
     et est rentré dans un mur. Nous allons essayer de
     rajouter le D pour voir s'il permet de combler 
     l'incrémentation du moteur. \par
@@ -1037,7 +1037,351 @@ est trop petit nous avons essayé de le mettre à 1. \par
     \end{center}
 
 On peut observer que le comportement du robot était 
-erratique. Le facteur I a besoin d'être petit. \par
+erratique. Il faisait drift sur drift en tournant sur lui-même. 
+Nous allons essayer de descendre le facteur P pour qu'il y ait moins d'erreur
+à intégrer. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p5_i1_d2_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 260,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 4,
+        xlabel = $ms$,
+        ylabel = $tick/PWM$
+    ]
+     
+    \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+     
+    \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+     
+    \addplot[thick, orange, smooth] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, brown, smooth] table [x = {x}, y = {y4}] {\table};
+    
+    \legend{
+        PWM Motor A,
+        PWM Motor B,
+        Tick A,
+        Tick B,
+    }
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 5
+        \item I : 1
+        \item D : 2
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Pour avoir des données traitables, nous allons descendre le facteur I. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p5_i0.01_d2_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 260,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 4,
+        xlabel = $ms$,
+        ylabel = $tick/PWM$
+    ]
+     
+    \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+     
+    \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+     
+    \addplot[thick, orange, smooth] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, brown, smooth] table [x = {x}, y = {y4}] {\table};
+    
+    \legend{
+        PWM Motor A,
+        PWM Motor B,
+        Tick A,
+        Tick B,
+    }
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 5
+        \item I : 0.01
+        \item D : 2
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Cette fois-ci, nous allons enlever le facteur D. Nous allons 
+aussi plafonner à 160 les PWM. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p5_i0.08_MAX160_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 260,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 4,
+        xlabel = $ms$,
+        ylabel = $tick/PWM$
+    ]
+     
+    \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+     
+    \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+     
+    \addplot[thick, orange, smooth] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, brown, smooth] table [x = {x}, y = {y4}] {\table};
+    
+    \legend{
+        PWM Motor A,
+        PWM Motor B,
+        Tick A,
+        Tick B,
+    }
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 5
+        \item I : 0.01
+        \item MAX : 160
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Nous pouvons voir qu'un seul moteur a eu une limite, faute de notre part. 
+Nous allons aussi mettre un maximum à 200. Cependant, la courbe du 
+moteur B est très intéressante. La prochaine séance de test sera dirigé 
+vers elle. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p3_i0.08_MAX200_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 260,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 4,
+        xlabel = $ms$,
+        ylabel = $tick/PWM$
+    ]
+     
+    \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+     
+    \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+     
+    \addplot[thick, orange, smooth] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, brown, smooth] table [x = {x}, y = {y4}] {\table};
+    
+    \legend{
+        PWM Motor A,
+        PWM Motor B,
+        Tick A,
+        Tick B,
+    }
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 3
+        \item I : 0.01
+        \item MAX : 200
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Honnêtement, le graphique est juste étrange. Je pense descendre la valeur 
+du I encore plus. Ce qui serait intéressant est d'avoir la consigne et la valeur 
+mesurée, essayer pour les prochains graphiques. \par
+
+Dans les prochains graphiques, nous aurons les vitesses observées ainsi que leur 
+consigne tout en gardant les PWM. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p2_i0.01_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 10,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 3,
+        xlabel = $ms$,
+        ylabel = $\cfrac{tours}{s}$]
+    
+     
+
+     
+    \addplot[thick, blue] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red] table [x = {x}, y = {y4}] {\table};
+
+    \addplot[thick, green, smooth] table [x = {x}, y = {y5}] {\table};
+    
+    \legend{
+        vitesse moteur A,
+        vitesse moteur B,
+        Consigne,}
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 2
+        \item I : 0.01
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Le robot tournait encore beaucoup, j'ai décidé de réduire encore le P et le I. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p0.85_i0.01_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 10,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 3,
+        xlabel = $ms$,
+        ylabel = $\cfrac{tours}{s}$]
+    
+     
+
+     
+    \addplot[thick, blue] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red] table [x = {x}, y = {y4}] {\table};
+
+    \addplot[thick, green, smooth] table [x = {x}, y = {y5}] {\table};
+    
+    \legend{
+        vitesse moteur A,
+        vitesse moteur B,
+        Consigne,}
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 0.85
+        \item I : 0.01
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Le robot est allé droit sur plus de 5m. La victoire est proche.
+Nous devrions revoir notre calcul de vitesse qu'il se fasse en $int$
+uniquement avec les ticks. Descendre le I permettrait d'amener 
+un meilleur contrôle du robot. \par
 
 
 \chapter{Conclusion}
