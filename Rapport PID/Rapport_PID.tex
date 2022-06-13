@@ -415,7 +415,7 @@ anchor=north}}
  
 \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
 
-\addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+\addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
 
 \legend{
     PWM Motor A,
@@ -491,7 +491,7 @@ Nous avons donc changé la fréquence d'acquisition à 12.5Hz. Voici le graphe q
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -548,7 +548,7 @@ graphique nous avons décidé de refaire notre cheminement pour obtenir un PID r
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -604,7 +604,7 @@ Les 4 tours/s aident pour la vitesse de prise des données. Nous avons donc desc
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -659,7 +659,7 @@ Nous l'avons après 10$s$. À partir de ce graphe nous avons essayé une valeur 
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -719,7 +719,7 @@ traduit par une vitesse sembable. \par
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -777,7 +777,7 @@ Le prochain graphique comporte beaucoup de changement. Nous avons ajouté 10 PWM
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -835,7 +835,7 @@ que le nombre de tours et le facteur I qui reste encore trop abrupt. \par
      
     \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
     
-    \addplot[thin, red, smooth] table [x = {x}, y = {y4}] {\table};
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
     
     \legend{
         PWM Motor A,
@@ -860,7 +860,9 @@ que le nombre de tours et le facteur I qui reste encore trop abrupt. \par
     \end{center}
 
 Le robot a d'abord tourné sur la gauche, puis est rentré dans un obstacle. Après l'avoir reposé à terre, il est allé tout droit. 
-On peut voir que les courbes des ticks se rejoignent bien après l'erreur du repositionnement. \par
+On peut voir que les courbes des ticks se rejoignent bien après l'erreur du repositionnement. 
+Nous nous approchons des valeurs qui nous permettraient d'avoir 
+un robot qui avance tout droit. \par
 
 
 
