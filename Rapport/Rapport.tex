@@ -268,7 +268,7 @@ Vous trouverez ci-dessous un tableau comprenant nos critères pour ce choix.
     \begin{center}
         \vspace{5mm}
         \label{tab:table1}
-        \begin{tabular}{c|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
             \toprule
             \textbf{ } & \textbf{Office365} & \textbf{\LaTeX}\\
             \midrule
@@ -500,13 +500,28 @@ la fusionner en une pièce et de l'imprimer en 3D. \par
 
 \chapter{Électronique}
 
-WORK IN PROGRESS
+Nous avons réalisé plusieurs PCBs différents pour notre projet. Ils ont tous été faits par le CPNV sauf 
+un qui est le PCB du pont en H. Une explication succinte accompagnera chaque présentation de PCB et une 
+explication de nos choix concernant les différents composants. \par
+
+\section{Pont en H}
+
+
+
+\section{PCBs Alimentation}
+
+
+
+\section{Support Capteurs}
 
 
 
 %1. Exposition de nos PCBs et schéma électrique ??? Est-ce qu'on doit en faire un ???
 %2. Argumentation de nos choix de PCBs
 %3. Approche des problèmes et méthodologies utilisées
+%4. Développement électronique
+%5. Direction choisie selon Datasheet ou non
+%6. D'où proviennent les éléments
 
 \chapter{Informatique}
 
@@ -563,6 +578,9 @@ dans notre cas avec des moteurs DC. C'est pour cela que nous avons choisi de con
 
 Vous trouverez de plus amples informations concernant le code et notre utilisation des interruptions
 à ce fichier : \href{run:./Code_Arduino.pdf}{Explication code Arduino}
+
+La méthode que nous avons choisie est celle empirique. Pour un détail de toutes les données utilisées 
+et les graphiques correspondant veuillez vous référer au document suivant : Rapport PID \par
 
 
 
@@ -640,7 +658,6 @@ Le bus de communication I2C permet une communication rapide entre un maître, Ra
 Ce bus de communication est rapide, soit ~100kbits/s, cela permet d'avoir une transmission quasi instantanée de l'information.
 Les librairies d'un côté comme de l'autre sont simple à utiliser et se mette rapidement en place. 
 
-\newpage
 \begin{itemize}
 	\item Flexibilité pour ajouter des esclaves potentiels
 	\item Rapide
