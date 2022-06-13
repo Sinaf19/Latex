@@ -374,10 +374,10 @@ du robot. \par
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[scale=1]{example-image-a}
+	\includegraphics[scale=.8]{img/Haut_Robot.png}
 	\vspace{.5cm}
 	\label{img:img2}
-	\captionabove{Photo du robot avec des annotations pour voir le moteur A et le moteur B}
+	\captionabove{Positionnement des moteurs}
 \end{figure}
 
 
@@ -862,10 +862,182 @@ que le nombre de tours et le facteur I qui reste encore trop abrupt. \par
 Le robot a d'abord tourné sur la gauche, puis est rentré dans un obstacle. Après l'avoir reposé à terre, il est allé tout droit. 
 On peut voir que les courbes des ticks se rejoignent bien après l'erreur du repositionnement. 
 Nous nous approchons des valeurs qui nous permettraient d'avoir 
-un robot qui avance tout droit. \par
+un robot qui avance tout droit. Cependant, on voit qu'il prend $4s$ pour que l'intégratif rende l'erreur 
+presque nulle. \par
 
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p30_i0.01_M+3_Ftrue.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 200,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 4,
+        xlabel = $ms$,
+        ylabel = $tick/PWM$
+    ]
+     
+    \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+     
+    \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+     
+    \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
+    
+    \legend{
+        PWM Motor A,
+        PWM Motor B,
+        Tick A,
+        Tick B,
+    }
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 30
+        \item I : 0.01
+        \item Frottements
+        \item 4 tours/s
+        \item Moteur A + 3
+    \end{itemize}
+    \end{center}
 
+    Le robot a d'abord tourné à gauche puis à droite 
+    et est rentré dans un mur. Nous allons essayer de
+    rajouter le D pour voir s'il permet de combler 
+    l'incrémentation du moteur. \par
 
+    \begin{center}
+        \begin{tikzpicture}
+        \pgfplotsset{every axis legend/.append style={
+        at={(0.5,1.03)},
+        anchor=north}}
+        \pgfplotstableread{12.5Hz_p30_i0.01_d2_F.prn}{\table}
+        \begin{axis}[
+            xmin = 0, xmax = 8000,
+            ymin = 0, ymax = 200,
+        %    xtick distance = 1,
+          %  ytick distance = 0.25,
+            %grid = both,
+           % minor tick num = 1,
+           % major grid style = {lightgray},
+           % minor grid style = {lightgray!25},
+            width = \textwidth,
+            height = 0.75\textwidth,
+            %legend cell align = {left},
+            %legend pos = north west
+            legend columns = 4,
+            xlabel = $ms$,
+            ylabel = $tick/PWM$
+        ]
+         
+        \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+         
+        \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+         
+        \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
+        
+        \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
+        
+        \legend{
+            PWM Motor A,
+            PWM Motor B,
+            Tick A,
+            Tick B,
+        }
+        
+        \end{axis}
+        \label{graph:graph1} 
+        \end{tikzpicture}
+        
+        
+        \begin{itemize}
+            \item Fréquence : 12.5Hz
+            \item P : 30
+            \item I : 0.01
+            \item D : 2
+            \item Frottements
+            \item 4 tours/s
+        \end{itemize}
+        \end{center}
+
+Le robot a d'abord tourné à gauche puis puis tout droit et 
+enfin à droite. Pour voir exactement si le facteur I
+est trop petit nous avons essayé de le mettre à 1. \par
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{12.5Hz_p30_i1_d2_F.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 260,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 4,
+        xlabel = $ms$,
+        ylabel = $tick/PWM$
+    ]
+     
+    \addplot[thick, blue] table [x = {x}, y = {y1}] {\table};
+     
+    \addplot[thick, red] table [x ={x}, y = {y3}] {\table};
+     
+    \addplot[thick, blue, smooth] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red, smooth] table [x = {x}, y = {y4}] {\table};
+    
+    \legend{
+        PWM Motor A,
+        PWM Motor B,
+        Tick A,
+        Tick B,
+    }
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 30
+        \item I : 1
+        \item D : 2
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+On peut observer que le comportement du robot était 
+erratique. Le facteur I a besoin d'être petit. \par
 
 
 \chapter{Conclusion}
