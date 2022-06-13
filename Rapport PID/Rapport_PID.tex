@@ -443,7 +443,19 @@ du développement. On peut voir que le nombre de tick est toujours égal à 0 sa
 à 1. C'est à partir de ce graphique que nous avons refait nos calculs pour qu'au minimum 3 ticks se fassent entre deux 
 échantillonages par la fonction d'asservissement. \par
 
-Insérer les différents calculs faits par nos soins. \par
+\begin{figure}[h]
+    $\varnothing\ 90 = D$ \par
+    $D \cdot \pi = P$ \par
+    $90 \cdot 10^-3 \cdot \pi = 0.2827m$ \par
+    $1 tour = 0.2827m$ \par
+    $3 \cfrac{tour}{s} \cdot 3.6 = 0.8481\cfrac{m}{s} \cdot 3.6 = 3.05\cfrac{km}{h}$ \par
+    Une roue compteuse possède 24 trous, donc 24 incrémentations par tour \par
+    $24 \cdot 3 = 72$ \par
+    $3 / 72 = 0.04s$ \par
+    Pour être sûr d'avoir suffisamment de trous nous mettons une fréquence à 12.5Hz, donc $80ms$
+    \caption{Équation du PID}
+    \label{eq1}
+\end{figure}
 
 Nous avons donc changé la fréquence d'acquisition à 12.5Hz. Voici le graphe que nous avions avec nos paramètres : 
 
