@@ -357,18 +357,31 @@ Cela nous permet de créer un fichier .csv facilement. \par
 \section{Data}
 
 Avec notre fichier .csv sur notre Raspberry PI, nous pouvons l'enregistrer sur une clef USB. Le nom du fichier donne tous les paramètres 
-de l'expérience. Pour que le fichier de données soit lisible par \LaTeX\ nous devons changer deux trois trucs qu'il faudra préciser. \par
+de l'expérience. Pour que le fichier de données soit lisible par \LaTeX\ nous devons exécuter plusieurs commandes. 
+Tout d'abord copier les données bruts dans Excel. Ensuite convertir les données en mettant comme séparateur la 
+virgule. Ensuite ajouté une ligne tout en haut pour nommer les colonnes, $y1$, $y2$, $y3$, $y4$. 
+Insérer une colonne au début pour le temps nommé $x$. Convertir chaque colonne en texte et exporté le fichier sous 
+format .prn pour avoir un séparateur par espace.  \par
 
 Après avoir fait ces différentes opérations, il est nécessaire de créer un grapique. Cela nous permet de visualiser concrètement ce qu'il 
 se passe dans notre système et d'en tirer des conclusions. \par
 
 \chapter{Extrapolation des données}
 
-Nous allons montrer les différents graphiques que nous avons obtenu avec nos différentes expériences. \par
+Nous allons montrer les différents graphiques que nous avons obtenu avec nos différentes expériences. Les premiers 
+graphiques sont faits en roue libre. Le moteur A est le moteur gauche du robot et le moteur B est le moteur droite 
+du robot. \par
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=1]{example-image-a}
+	\vspace{.5cm}
+	\label{img:img2}
+	\captionabove{Photo du robot avec des annotations pour voir le moteur A et le moteur B}
+\end{figure}
+
 
 \section{Graphiques}
-
-Les premiers graphiques présentés sont faits en roue libre. \par
 
 \begin{center}
     
