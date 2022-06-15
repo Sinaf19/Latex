@@ -571,29 +571,98 @@ Le schéma complet du pont H peut être trouvé ici : \href{run:./Schema_pont_H}
 La question de l'alimentation est primordial dans notre projet. Nous avons un système sur batterie avec plusieurs 
 éléments demandant des courants plus ou moins grands. Nous avons donc dû dimensionner plusieurs alimentations pour 
 répondre aux différents besoins. Tous les microcontrôleurs ainsi que les capteurs sont sur une alimentation pouvant 
-fournir jusqu'à $1A$. Le raspberry ainsi que l'écran sont sur une alimentation pouvant fournir jusqu'à $4A$. Les
+fournir jusqu'à $0.5A$. Le raspberry ainsi que l'écran sont sur une alimentation pouvant fournir jusqu'à $4A$. Les
 deux donnent un courant continu à $5V$. \par
 
-\subsection{5V/1A}
+\newpage
+\subsection{5V/0.5A}
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=.7]{img/Alimentation5v0.5A.png}
 	\label{Alim1A}
-	\captionbelow{3D de l'alimentation 5V/1A}
+	\captionbelow{3D du PCB de l'alimentation 5V/0.5A}
 \end{figure}
 
+Ce PCB possède deux convertisseurs DC/DC qui permettent de transformer la puissance reçue des batteries en 
+$5V$ stable à $0.5A$. Nous avons deux convertisseurs afin d'être sûr d'avoir suffisamment de courant pour alimenter
+les différents composants sur le réseau. Le PCB est composé des composants suivants : 
 
+\begin{itemize}
+	\item Arduino Nano Every
+	\item 2 Recom-78E5.0-0.5
+	\item 4 condensateurs polarisés $10\mu F$, 2 par convertisseur
+	\item 2 diodes 1N4007 entre la puissance et le 5V en sortie.
+\end{itemize}
 
+Nous avons décidé d'ajouter des boutons pour en avoir si jamais nous souhations les utiliser. Les entrées des borniers
+sont à la fois pour donner la puissance aux capteurs et pour recevoir le signal qu'ils émettent. Nous avons ajouté 
+des connecteurs 2x10 à pins mâles afin de pouvoir facilement connecter des consommateurs si nous souhaitons en 
+ajouter. \par
 
+Nous avons aussi installer un connecteur 1x3 qui nous permet de choisir d'où provient la puissance pour alimenter l'
+Arduino. En effet, pour faciliter l'Upload depuis l'ordinateur, nous n'avons pas besoin d'enlever l'Arduino et de le 
+remettre, mais simplement changer la connexion des pins. \par
+
+\newpage
+Nous avons aussi installé une LED directement lié à un convertisseur qui donne l'information si le PCB est en 
+fonction ou non. Pour décider de sa résistance voici le calcul utilisé : 
+
+\begin{figure}[!h]
+
+		\[U_R = 5-2 = 3V\]
+		\[R = \cfrac{U_R}{I_max} = \cfrac{3}{15_mA} = 0.2k\Omega\] 
+		\caption{Équation pour trouver la résistance minimum pour LED}
+		\label{eq2}
+
+\end{figure}
+
+Nous trouvons donc une valeur de $200\Omega$. Cependant, nous avons choisi une résistance de $470\Omega$, pour que 
+la LED ne soit pas trop lumineuse.
+
+Le schéma de ce PCB se trouve ici : \href{run:./Schema_Alim_0.5.pdf}{Schéma PCB Alimentation 5V/0.5A}
 
 
 \subsection{5V/4A}
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.7]{img/Alimentation5v4A.png}
+	\label{Alim4A}
+	\captionbelow{3D du PCB de l'alimentation 5V/4A}
+\end{figure}
 
+Nous pouvons voir que ce dernier est très sembable au PCB précédent. Ce PCB possède un convertisseur DC/DC $5V$ stable
+et $4A$. Voici les raisons pour lesquels nous avons choisi ce convertisseur : 
+
+\begin{itemize}
+	\item Donne le courant pour le Raspberry PI, l'écran et la caméra
+	\item Donne le courant aux LED strips qui sont dirigées par l'Arduino
+\end{itemize}
+
+L'étage auquel il se trouve sur le robot est celui consommant le plus. Nous avons donc dû choisir ce convertisseur.
+La structure est semblable au précédent PCB. Cependant les borniers sont utilisés pour transmettre du $5V$ et du $GND$.
+Nous les utilisons pour alimenter le Raspberry PI et les LEDs. \par
+
+Nous avons une nouvelle fonction dans ce PCB qui est la transmission d'information via I2C entre le Raspberry PI et
+l'Arduino Nano Every. Nous avons utilisé un level shifter pour garantir que le Raspberry PI ne sera pas en surtension. \par
+
+Le schéma du PCB peut être trouvé ici : \href{run:./Schema_Alim_4.pdf}{Schéma PCB Alimentation 5V/4A}
 
 \section{Support Capteurs}
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.5]{img/Capteur.png}
+	\label{SupportCapteur}
+	\captionbelow{3D du PCB support capteur}
+\end{figure}
+
+Le dernier des PCBs que nous avons créé est celui qui permet de supporter notre capteur à ultrasons. Nous y avons
+ajouté les Arduino Nano Every que nous utilisons dans nos programmes. Il possède des borniers pour l'alimentation
+et pour que le signal du capteur puisse être ammené au bon endroit. \par
+
+Le schéma pour ce PCB se trouve ici : \href{run:./Schema_SupportCapteur.pdf}{Schéma du Support Capteur}
 
 
 %1. Exposition de nos PCBs et schéma électrique ??? Est-ce qu'on doit en faire un ???
