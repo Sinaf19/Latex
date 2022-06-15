@@ -443,7 +443,7 @@ points qui ne nous satifaisaient pas sur la pièce en aluminium déjà faite. \p
 \begin{table}[!ht]
     \begin{center}
         \vspace{5mm}
-        \label{tab:table6}
+        \label{tab:table5}
         \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
             \toprule
             \textbf{ } & \textbf{Pièce refaite en PMMA} & \textbf{Pièce en aluminium}\\
@@ -506,9 +506,89 @@ explication de nos choix concernant les différents composants. \par
 
 \section{Pont en H}
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=.7]{img/PontH.png}
+	\label{PontH}
+	\captionbelow{3D du pont H vue de haut}
+\end{figure}
+
+Le PCB pont H a été fait en se basant sur le moyen projet de notre collègue. 
+Nous avons eu accès à tous ces documents pour pouvoir créer une nouvelle version. Plusieurs éléments n'ont pas été 
+changé : 
+
+\begin{itemize}
+	\item Circuit du pont H, L298N
+	\item Le choix d'ajouter des capacités de $470\mu F$ pour plus de sécurité
+	\item Les capacités selon la datasheet du L298N de $100nF$ entre le signal et le ground ainsi qu'entre la puissance et le ground
+	\item Le circuit TC74 pour capter la température du radiateur pour la communiquer via I2C
+	\item Les 8 diodes de protection
+\end{itemize}
+
+Nous avons ajouté plusieurs composants : 
+
+\begin{itemize}
+	\item Un connecteur 2x10 en pin mâles
+	\item Borniers pour le signal et la puissance
+	\item Des indications pour informer sur l'utilisation ou la position des éléments
+\end{itemize}
+
+\begin{table}[!ht]
+    \begin{center}
+        \vspace{5mm}
+        \label{tab:table6}
+        \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+            \toprule
+            \textbf{ } & \textbf{Ancienne Version} & \textbf{Nouvelle version}\\
+            \midrule
+            Facilité d'utilisation & 8 & 5\\
+            Grandeur & 8 & 5\\
+			\midrule
+			Total & 16 & 10\\
+            \bottomrule
+        \end{tabular}
+    \end{center}    
+	\caption{Comparaison des versions PCBs pont H, échelle 1 à 10 (1 le moins bon, 10 le meilleur)}
+\end{table}
+
+Les 8 diodes permettent de protéger le PCB contre les surtensions provenant du moteur lorsque ce dernier ne reçoit 
+plus de courant et devient une génératrice en créant un champ en faisant tourner l'aimant. Le positionnement des 
+diodes est comme le schéma ci-dessous. 
+
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[scale=.7]{img/Diodes.png}
+		\label{Diodes}
+		\captionbelow{Schéma électrique de l'emplacement des diodes}
+	\end{center}
+\end{figure}
+
+Le schéma complet du pont H peut être trouvé ici : \href{run:./Schema_pont_H}{Schéma pont H}
 
 
 \section{PCBs Alimentation}
+
+La question de l'alimentation est primordial dans notre projet. Nous avons un système sur batterie avec plusieurs 
+éléments demandant des courants plus ou moins grands. Nous avons donc dû dimensionner plusieurs alimentations pour 
+répondre aux différents besoins. Tous les microcontrôleurs ainsi que les capteurs sont sur une alimentation pouvant 
+fournir jusqu'à $1A$. Le raspberry ainsi que l'écran sont sur une alimentation pouvant fournir jusqu'à $4A$. Les
+deux donnent un courant continu à $5V$. \par
+
+\subsection{5V/1A}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.7]{img/Alimentation5v0.5A.png}
+	\label{Alim1A}
+	\captionbelow{3D de l'alimentation 5V/1A}
+\end{figure}
+
+
+
+
+
+
+\subsection{5V/4A}
 
 
 
@@ -557,7 +637,7 @@ de Ziegler-Nichols ou alors la méthode empirique. Voici un tableau pour les dé
 \begin{table}[!ht]
     \begin{center}
         \vspace{5mm}
-        \label{tab:table5}
+        \label{tab:table7}
         \begin{tabular}{c|c|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
             \toprule
             \textbf{ } & \textbf{Ziegler-Nichols} & \textbf{Empirique}\\
