@@ -1383,10 +1383,178 @@ Nous devrions revoir notre calcul de vitesse qu'il se fasse en $int$
 uniquement avec les ticks. Descendre le I permettrait d'amener 
 un meilleur contrôle du robot. \par
 
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{p0.8_i0.008_d5.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 10,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 3,
+        xlabel = $ms$,
+        ylabel = $\cfrac{tours}{s}$]
+    
+     
+
+     
+    \addplot[thick, blue] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red] table [x = {x}, y = {y4}] {\table};
+
+    \addplot[thick, green, smooth] table [x = {x}, y = {y5}] {\table};
+    
+    \legend{
+        vitesse moteur A,
+        vitesse moteur B,
+        Consigne,}
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 0.8
+        \item I : 0.008
+        \item D : 5
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+Encore une fois un comportement étrange. Le D qui serait beaucoup trop grand ?
+
+\begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{p0.8_i0.008_d5_A+2_B-5.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 10,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 3,
+        xlabel = $ms$,
+        ylabel = $\cfrac{tours}{s}$]
+    
+     
+
+     
+    \addplot[thick, blue] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red] table [x = {x}, y = {y4}] {\table};
+
+    \addplot[thick, green, smooth] table [x = {x}, y = {y5}] {\table};
+    
+    \legend{
+        vitesse moteur A,
+        vitesse moteur B,
+        Consigne,}
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 0.8
+        \item I : 0.008
+        \item D : 5
+        \item Moteur A + 2
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+    L'ajout d'une variable fixe ne permet pas de faire en sorte 
+    de corriger le problème que nous avons. Le robot tourne de nouveau 
+    sur lui-même alors même que les paramètres sont les mêmes que 
+    la dernière fois. 
+
+
+    \begin{center}
+    \begin{tikzpicture}
+    \pgfplotsset{every axis legend/.append style={
+    at={(0.5,1.03)},
+    anchor=north}}
+    \pgfplotstableread{p0.8_i0.008_d5_A+2.prn}{\table}
+    \begin{axis}[
+        xmin = 0, xmax = 8000,
+        ymin = 0, ymax = 10,
+    %    xtick distance = 1,
+      %  ytick distance = 0.25,
+        %grid = both,
+       % minor tick num = 1,
+       % major grid style = {lightgray},
+       % minor grid style = {lightgray!25},
+        width = \textwidth,
+        height = 0.75\textwidth,
+        %legend cell align = {left},
+        %legend pos = north west
+        legend columns = 3,
+        xlabel = $ms$,
+        ylabel = $\cfrac{tours}{s}$]
+    
+     
+
+     
+    \addplot[thick, blue] table [x = {x}, y = {y2}] {\table};
+    
+    \addplot[thick, red] table [x = {x}, y = {y4}] {\table};
+
+    \addplot[thick, green, smooth] table [x = {x}, y = {y5}] {\table};
+    
+    \legend{
+        vitesse moteur A,
+        vitesse moteur B,
+        Consigne,}
+    
+    \end{axis}
+    \label{graph:graph1} 
+    \end{tikzpicture}
+    
+    
+    \begin{itemize}
+        \item Fréquence : 12.5Hz
+        \item P : 0.8
+        \item I : 0.008
+        \item D : 5
+        \item Moteur A + 2
+        \item Moteur B - 5
+        \item Frottements
+        \item 4 tours/s
+    \end{itemize}
+    \end{center}
+
+    L'idée de changer le PWM en rajoutant ou en enlevant des PWM est une mauvaise idée.
 
 \chapter{Conclusion}
 
-Faut de temps, nous n'avons pas pu tester d'autres combinations de PID. Les différents tests ont 
+Faute de temps, nous n'avons pas pu tester d'autres combinations de PID. Les différents tests ont 
 su évoluer à mesure que nous comprenions de mieux en mieux le fonctionnement de l'asservissement. \par
 
 
